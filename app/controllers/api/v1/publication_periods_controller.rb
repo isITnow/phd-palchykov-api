@@ -1,20 +1,35 @@
 class Api::V1::PublicationPeriodsController < ApplicationController
-  before_action :set_publication_period!, only: %i[show]
+  
   def index
     @publication_periods = PublicationPeriod.all
 
     render json: @publication_periods, status: 200
   end
 
-  def show
-    @publications = @publication_period.publications
+  def create
+    @publication_period = PublicationPeriod.new publication_period_params
 
-    render json: @publications, status: 200
+    if @publication_period.save
+      render json: @publication_period, status: :created
+    else
+      render json: @publication_period.errors, status: :unprocessable_entity
+    end
   end
+
+  def destroy
+    @publication_period.destroy
+
+    head :no_content
+  end
+  
 
   private
 
-  def set_publication_period!
+  def publication_period_params
+    params.require(:publication_period).permit(:title)
+  end
+
+  def set_publication_period
     @publication_period = PublicationPeriod.find params[:id]
   end
   
