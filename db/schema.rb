@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_115531) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_21_121225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,4 +20,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_115531) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "publications", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "source", null: false
+    t.string "source_url", null: false
+    t.string "authors", default: [], array: true
+    t.bigint "publication_period_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["publication_period_id"], name: "index_publications_on_publication_period_id"
+  end
+
+  add_foreign_key "publications", "publication_periods"
 end
