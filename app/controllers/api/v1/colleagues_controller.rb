@@ -1,5 +1,5 @@
 class Api::V1::ColleaguesController < ApplicationController
-  before_action :set_colleague!, only: %i[destroy update]
+  before_action :set_colleague, only: %i[destroy update]
 
   def index
     @colleagues = Colleague.all
@@ -13,20 +13,22 @@ class Api::V1::ColleaguesController < ApplicationController
     if @colleague.save
       render json: @colleague, status: :created
     else
-      render json: @colleague.errors, status: :unprocessable_entity
+      render json: @colleague.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   def update
     if @colleague.update colleague_params
-      render json: @colleague
+      render json: @colleague, status: :accepted
     else
-      render json: @colleague.errors, status: :unprocessable_entity
+      render json: @colleague.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   def destroy
     @colleague.destroy
+
+    head :no_content
   end
   
   
@@ -36,9 +38,8 @@ class Api::V1::ColleaguesController < ApplicationController
     params.require(:colleague).permit(:name, :position, :email, :phone)
   end
 
-  def set_colleague!
+  def set_colleague
     @colleague = Colleague.find params[:id]
   end
-  
   
 end
