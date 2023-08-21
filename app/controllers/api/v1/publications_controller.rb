@@ -14,7 +14,7 @@ class Api::V1::PublicationsController < ApplicationController
     if @publication.save
       render json: @publication, status: :created
     else
-      render json: @publication.errors, status: :unprocessable_entity
+      render json: @publication.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -22,7 +22,7 @@ class Api::V1::PublicationsController < ApplicationController
     if @publication.update publication_params
       render json: @publication
     else
-      render json: @publication.errors, status: :unprocessable_entity
+      render json: @publication.errors.full_messages, status: :unprocessable_entity
     end
   end
 
