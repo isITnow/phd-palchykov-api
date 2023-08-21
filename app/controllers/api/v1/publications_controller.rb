@@ -1,5 +1,5 @@
 class Api::V1::PublicationsController < ApplicationController
-  before_action :set_publication_period!, only: %i[index]
+  before_action :set_publication_period
   before_action :set_publication!, only: %i[update destroy]
 
   def index
@@ -11,10 +11,10 @@ class Api::V1::PublicationsController < ApplicationController
   def create
     @publication = @publication_period.publications.build publication_params
 
-    if @colleague.save
-      render json: @colleague, status: :created
+    if @publication.save
+      render json: @publication, status: :created
     else
-      render json: @colleague.errors, status: :unprocessable_entity
+      render json: @publication.errors, status: :unprocessable_entity
     end
   end
 
@@ -28,15 +28,15 @@ class Api::V1::PublicationsController < ApplicationController
 
   def destroy
     @publication.destroy
+
+    head :no_content
   end
-  
   
   private
 
-  def set_publication_period!
+  def set_publication_period
     @publication_period = PublicationPeriod.find params[:publication_period_id]
   end
-  
   
   def set_publication!
     @publication = @publication_period.publications.find params[:id]
