@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
 
-      resources :publication_periods, only: %i[index] do
+      resources :publication_periods, only: %i[index create destroy] do
         resources :publications, except: %i[show]
       end
 
