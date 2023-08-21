@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      get 'publication_periods/index'
-      get 'publication_periods/show'
+
+      resources :publication_periods, only: %i[index show] do
+        resources :publications, except: %i[index show]
+      end
+
+      resources :colleagues, except: %i[show]
+      resources :news
     end
   end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
   # root "articles#index"
 end
