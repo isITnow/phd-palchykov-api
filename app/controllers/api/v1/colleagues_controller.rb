@@ -35,7 +35,7 @@ class Api::V1::ColleaguesController < ApplicationController
   private
 
   def colleague_params
-    params.require(:colleague).permit(:name, :position, :email, :phone)
+    params.require(:colleague).permit(:name, :position, :email, :phone, :image)
   end
 
   def set_colleague
