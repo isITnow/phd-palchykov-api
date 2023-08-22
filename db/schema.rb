@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_151854) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_22_083445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_151854) do
   create_table "news", force: :cascade do |t|
     t.string "title", null: false
     t.text "body"
-    t.string "date"
+    t.string "date", default: ""
     t.string "links", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
