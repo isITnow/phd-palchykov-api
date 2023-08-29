@@ -1,6 +1,6 @@
 class PublicationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers  
-  attributes :id, :title, :source, :psource_url, :authors, :cover_url, :abstract_url, :created_at
+  attributes :id, :title, :source, :source_url, :authors, :cover_url, :abstract_url, :publication_period_id, :created_at
 
   def cover_url
     if object.cover.attached?
@@ -10,7 +10,7 @@ class PublicationSerializer < ActiveModel::Serializer
 
   def abstract_url
     if object.abstract.attached?
-      rails_blob_url(object.cabstract, only_path: true)
+      rails_blob_url(object.abstract, only_path: true)
     end
   end
 end
