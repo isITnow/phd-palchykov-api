@@ -8,6 +8,9 @@ Rails.application.routes.draw do
 
       resources :colleagues, except: %i[show]
       resources :news
+      resources :researches, only: %i[index create destroy] do
+        resources :illustrations, only: %i[create]
+      end
     end
   end
 
