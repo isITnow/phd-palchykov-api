@@ -20,7 +20,7 @@ class Api::V1::PublicationsController < ApplicationController
 
   def update
     if @publication.update publication_params
-      render json: @publication
+      render json: @publication, status: :accepted
     else
       render json: @publication.errors.full_messages, status: :unprocessable_entity
     end
@@ -43,6 +43,6 @@ class Api::V1::PublicationsController < ApplicationController
   end
   
   def publication_params
-    params.require(:publication).permit(:title, :source, :source_url, :cover_url, :abstract_url, authors: [])
+    params.require(:publication).permit(:title, :source, :source_url, :cover, :abstract, authors: [])
   end
 end
