@@ -4,7 +4,10 @@ class Api::V1::IllustrationsController < ApplicationController
   def create
     @illustration = @research.illustrations.build illustration_params
 
-    unless @illustration.save
+    
+    if @illustration.save
+      render json: @illustration, status: :created
+    else
       render json: @illustration.errors, status: :unprocessable_entity
     end
   end
@@ -12,11 +15,11 @@ class Api::V1::IllustrationsController < ApplicationController
   private
 
   def illustration_params
-    params.require(:illustration).permit(:description, :image)
+    params.require(:illustration).permit(:description, :schema)
   end
 
   def set_research
-    @research = Reserch.find params[:id]
+    @research = Research.find params[:research_id]
   end
   
 end
