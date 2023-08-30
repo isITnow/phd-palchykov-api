@@ -16,12 +16,11 @@ class Api::V1::ResearchesController < ApplicationController
   end
 
   def destroy
-    @@research.destroy
+    @research.destroy
 
     head :no_content
   end
   
-
   private
 
   def research_params
