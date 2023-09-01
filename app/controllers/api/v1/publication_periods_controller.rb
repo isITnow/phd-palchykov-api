@@ -1,7 +1,7 @@
 class Api::V1::PublicationPeriodsController < ApplicationController
   
   def index
-    @publication_periods = PublicationPeriod.all.order(id: :desc)
+    @publication_periods = PublicationPeriod.all
 
     render json: @publication_periods, status: 200
   end
