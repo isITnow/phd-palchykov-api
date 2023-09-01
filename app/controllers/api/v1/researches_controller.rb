@@ -1,5 +1,6 @@
 class Api::V1::ResearchesController < ApplicationController
-  
+  before_action :set_research, only: :destroy
+
   def index
     @researches = Research.includes(:illustrations)
     render json: @researches, status: 200 
@@ -26,5 +27,10 @@ class Api::V1::ResearchesController < ApplicationController
   def research_params
     params.require(:research).permit(:payload)
   end
+
+  def set_research
+    @research = Research.find params[:id]
+  end
+  
   
 end
