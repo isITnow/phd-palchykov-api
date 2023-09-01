@@ -6,8 +6,8 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-PublicationPeriod.create(title: "2021-present")
-PublicationPeriod.create(title: "2016-2020")
-PublicationPeriod.create(title: "2011-2015")
-PublicationPeriod.create(title: "2005-2010")
-PublicationPeriod.create(title: "Books and chapters")
+PublicationPeriod.find_or_create_by_title("2021-present")
+PublicationPeriod.find_or_create_by_title("2016-2020")
+PublicationPeriod.find_or_create_by_title("2011-2015")
+PublicationPeriod.find_or_create_by_title("2005-2010")
+PublicationPeriod.find_or_create_by_title("Books and chapters")
