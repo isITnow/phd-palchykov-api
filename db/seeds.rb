@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+PublicationPeriod.create(title: "2021-present")
+PublicationPeriod.create(title: "2016-2020")
+PublicationPeriod.create(title: "2011-2015")
+PublicationPeriod.create(title: "2005-2010")
+PublicationPeriod.create(title: "Books and chapters")
