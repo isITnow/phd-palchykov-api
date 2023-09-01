@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_094234) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_29_150637) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_094234) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "illustrations", force: :cascade do |t|
+    t.text "description", null: false
+    t.bigint "research_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["research_id"], name: "index_illustrations_on_research_id"
+  end
+
   create_table "news", force: :cascade do |t|
     t.string "title", null: false
     t.text "body"
@@ -77,7 +85,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_094234) do
     t.index ["publication_period_id"], name: "index_publications_on_publication_period_id"
   end
 
+  create_table "researches", force: :cascade do |t|
+    t.jsonb "payload"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "illustrations", "researches"
   add_foreign_key "publications", "publication_periods"
 end
