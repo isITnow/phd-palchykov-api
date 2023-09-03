@@ -1,5 +1,8 @@
 class Api::V1::ResearchesController < ApplicationController
+  skip_before_action :verify_authenticity_token, raise: false  
+  before_action :authenticate_devise_api_token!, only: %i[:create destroy]
   before_action :set_research, only: :destroy
+
 
   def index
     @researches = Research.includes(:illustrations)
