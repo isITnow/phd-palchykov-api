@@ -45,6 +45,6 @@ class Api::V1::PublicationsController < ApplicationController
   end
   
   def publication_params
-    params.require(:publication).permit(:title, :source, :source_url, :cover, :abstract, authors: [])
+    params.require(:publication).permit(:title, :year, :source, :source_url, :cover, :abstract, authors: [])
   end
 end
