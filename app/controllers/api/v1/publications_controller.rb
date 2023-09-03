@@ -5,7 +5,7 @@ class Api::V1::PublicationsController < ApplicationController
   before_action :set_publication!, only: %i[update destroy]
 
   def index
-    @publications = @publication_period.publications
+    @publications = @publication_period.publications.order(year: :desc)
 
     render json: @publications, status: 200
   end
