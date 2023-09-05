@@ -5,7 +5,7 @@ class Api::V1::ResearchesController < ApplicationController
 
 
   def index
-    @researches = Research.includes(:illustrations)
+    @researches = Research.includes(:illustrations).order(created_at: :desc)
     render json: @researches, status: 200 
   end
 

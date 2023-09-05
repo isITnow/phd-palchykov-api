@@ -4,12 +4,12 @@ class Api::V1::NewsController < ApplicationController
   before_action :set_news, except: %i[index create]
 
   def index
-    @news = News.all
+    @news = News.all.order(created_at: :desc)
 
     render json: @news, status: 200
   end
 
-  def create
+  def create  
     @news = News.new news_params
 
     if @news.save
