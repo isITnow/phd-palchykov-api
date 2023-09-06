@@ -1,4 +1,6 @@
 class Api::V1::ColleaguesController < ApplicationController
+  skip_before_action :verify_authenticity_token, raise: false  
+  before_action :authenticate_devise_api_token!, only: %i[:create :update destroy]
   before_action :set_colleague, only: %i[destroy update]
 
   def index

@@ -4,5 +4,5 @@ class Publication < ApplicationRecord
   has_one_attached :cover
   has_one_attached :abstract
 
-  validates :title, :source, :source_url, presence: true
+  validates :title, :source, :source_url, :year, presence: true
 end

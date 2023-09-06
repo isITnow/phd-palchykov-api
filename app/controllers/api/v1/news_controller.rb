@@ -1,13 +1,15 @@
 class Api::V1::NewsController < ApplicationController
+  skip_before_action :verify_authenticity_token, raise: false  
+  before_action :authenticate_devise_api_token!, only: %i[:create :update :destroy]
   before_action :set_news, except: %i[index create]
 
   def index
-    @news = News.all
+    @news = News.all.order(created_at: :desc)
 
     render json: @news, status: 200
   end
 
-  def create
+  def create  
     @news = News.new news_params
 
     if @news.save
@@ -40,5 +42,5 @@ class Api::V1::NewsController < ApplicationController
   def set_news
     @news = News.find params[:id]
   end
-  
+
 end
