@@ -12,7 +12,8 @@ PublicationPeriod.find_or_create_by(title: "2011-2015")
 PublicationPeriod.find_or_create_by(title: "2005-2010")
 PublicationPeriod.find_or_create_by(title: "Books and chapters")
 
-User.first_or_create(email: 'rom@example.com',
-                    password: 'password',
-                    password_confirmation: 'password',
-                    role: User.roles[:admin])
+User.first_or_create(username: "Rom the Dev",
+                      email: 'rom@example.com',
+                      password: 'password',
+                      password_confirmation: 'password',
+                      role: User.roles[:admin])
