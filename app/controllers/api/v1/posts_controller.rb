@@ -10,7 +10,7 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create  
-    @post = User.first.posts.build posts_params
+    @post = User.first.posts.build post_params
 
     if @post.save
       render json: @post, status: :created
@@ -35,7 +35,7 @@ class Api::V1::PostsController < ApplicationController
   
   private
 
-  def posts_params
+  def post_params
     params.require(:post).permit(:body)
   end
 
