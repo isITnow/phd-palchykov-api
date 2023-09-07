@@ -6,7 +6,9 @@ Rails.application.routes.draw do
       resources :colleagues, except: %i[new edit show]
       resources :news, except: %i[new edit show]
 
-      resources :posts, except: %i[new edit]
+      resources :posts, except: %i[new edit] do
+        resources :comments, only: %i[create destroy]
+      end
 
       resources :publication_periods, only: %i[index create destroy] do
         resources :publications, except: %i[new edit show]
