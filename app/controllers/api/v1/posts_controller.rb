@@ -10,7 +10,7 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create  
-    @post = current_user.posts.build posts_params
+    @post = User.first.posts.build posts_params
 
     if @post.save
       render json: @post, status: :created
