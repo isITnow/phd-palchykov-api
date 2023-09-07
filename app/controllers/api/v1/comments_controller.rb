@@ -5,7 +5,6 @@ class Api::V1::CommentsController < ApplicationController
   before_action :set_comment, only: %i[destroy]
 
   def create
-    debugger
     @comment = @post.comments.build comment_params
 
     if @comment.save
