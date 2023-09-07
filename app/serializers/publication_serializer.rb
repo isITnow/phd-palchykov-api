@@ -1,6 +1,6 @@
 class PublicationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers  
-  attributes :id, :title, :year, :source, :source_url, :authors, :cover_url, :abstract_url, :publication_period_id, :created_at
+  attributes :id, :publication_period_id, :year, :title, :source, :source_url, :authors, :cover_url, :abstract_url, :created_at
 
   def cover_url
     if object.cover.attached?
