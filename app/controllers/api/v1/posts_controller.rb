@@ -9,7 +9,13 @@ class Api::V1::PostsController < ApplicationController
     render json: @posts, status: 200
   end
 
-  def create  
+  def show
+    @comments = @post.comments.order(created_at: :desc)
+    render json: { post: @post, comments: @comments }, status: :ok
+  end
+  
+
+  def create
     @post = User.first.posts.build post_params
 
     if @post.save
