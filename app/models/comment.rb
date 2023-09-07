@@ -7,7 +7,6 @@ class Comment < ApplicationRecord
 
   private
     def ensure_author_has_a_value
-        self.author ||= "Guest User"
-      end
+      self.author ||= "Guest User"
     end
 end
