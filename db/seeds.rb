@@ -22,3 +22,12 @@
   body = Faker::Lorem.paragraph(sentence_count: 5, supplemental: true, random_sentences_to_add: 4)
   Post.create(body:, user_id: User.first.id)
 end
+
+posts = Post.all
+
+posts.each do |post|
+  5.times do
+    body = Faker::Lorem.paragraph(sentence_count: 3, supplemental: true, random_sentences_to_add: 2)
+    post.comments.create(body:)
+  end
+end
