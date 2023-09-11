@@ -7,6 +7,8 @@ class Comment < ApplicationRecord
 
   private
     def ensure_author_has_a_value
-      self.author ||= "Guest User"
+      if self.author.nil? || self.author.blank?
+        self.author = "Guest User"
+      end
     end
 end
