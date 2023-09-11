@@ -4,7 +4,7 @@ class Api::V1::PostsController < ApplicationController
   before_action :set_post, except: %i[index create]
 
   def index
-    @posts = Post.includes(:comments).order(updated_at: :desc)
+    @posts = Post.order(updated_at: :desc)
 
     render json: @posts, status: :ok
   end
@@ -25,7 +25,7 @@ class Api::V1::PostsController < ApplicationController
 
   def update
     if @post.update post_params
-      render json: @post, status: :accepted
+      render json: @post, action_name: action_name, status: :accepted
     else
       render json: @post.errors.full_messages, status: :unprocessable_entity
     end
