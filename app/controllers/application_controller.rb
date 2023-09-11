@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :is_valid_token?, except: %i[index], unless: :devise_controller?
+  before_action :is_valid_token?, except: %i[index show], unless: :devise_controller?
   before_action :configure_permited_parameters, if: :devise_controller?
 
   private
