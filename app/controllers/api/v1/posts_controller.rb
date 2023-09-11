@@ -4,17 +4,15 @@ class Api::V1::PostsController < ApplicationController
   before_action :set_post, except: %i[index create]
 
   def index
-    @posts = Post.all.order(updated_at: :desc)
+    @posts = Post.includes(:comments).order(updated_at: :desc)
 
-    render json: @posts, status: 200
+    render json: @posts, status: :ok
   end
 
   def show
-    @comments = @post.comments.order(created_at: :desc)
-    render json: { post: @post, comments: @comments }, status: :ok
+    render json: @post, action_name: action_name, status: :ok
   end
   
-
   def create
     @post = User.first.posts.build post_params
 
