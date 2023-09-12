@@ -3,6 +3,8 @@ class Api::V1::PostsController < ApplicationController
   before_action :authenticate_devise_api_token!, only: %i[create update destroy]
   before_action :set_post, except: %i[index create]
 
+  include ErrorHandling
+
   def index
     @posts = Post.order(updated_at: :desc)
 
@@ -19,7 +21,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.save
       render json: @post, status: :created
     else
-      render json: @post.errors.full_messages, status: :unprocessable_entity
+      render json: { error: @post.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -27,7 +29,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.update post_params
       render json: @post, action_name: action_name, status: :accepted
     else
-      render json: @post.errors.full_messages, status: :unprocessable_entity
+      render json: { error: @post.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
