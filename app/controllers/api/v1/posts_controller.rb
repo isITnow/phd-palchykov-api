@@ -1,9 +1,9 @@
 class Api::V1::PostsController < ApplicationController
   skip_before_action :verify_authenticity_token, raise: false  
   before_action :authenticate_devise_api_token!, only: %i[create update destroy]
-  before_action :set_post, except: %i[index create]
+  before_action :set_post!, except: %i[index create]
 
-  include ErrorHandling
+  include Api::V1::ErrorHandling
 
   def index
     @posts = Post.order(updated_at: :desc)
@@ -45,8 +45,7 @@ class Api::V1::PostsController < ApplicationController
     params.require(:post).permit(:body)
   end
 
-  def set_post
+  def set_post!
     @post = Post.find params[:id]
   end
-
 end
