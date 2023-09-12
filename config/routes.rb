@@ -2,13 +2,18 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       devise_for :users
+      
+      resources :colleagues, except: %i[new edit show]
+      resources :news, except: %i[new edit show]
 
-      resources :publication_periods, only: %i[index create destroy] do
-        resources :publications, except: %i[show]
+      resources :posts, except: %i[new edit] do
+        resources :comments, only: %i[create destroy]
       end
 
-      resources :colleagues, except: %i[show]
-      resources :news
+      resources :publication_periods, only: %i[index create destroy] do
+        resources :publications, except: %i[new edit show]
+      end
+
       resources :researches, only: %i[index create destroy] do
         resources :illustrations, only: %i[create]
       end
