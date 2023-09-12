@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
 
   def is_valid_token?
     devise_api_token = current_devise_api_token
-    render json: { message: "You are not authorized" },
+    render json: { error: "You are not authorized" },
             status: :unauthorized  unless devise_api_token
   end
 
