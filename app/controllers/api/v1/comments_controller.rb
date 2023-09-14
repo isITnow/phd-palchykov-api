@@ -2,8 +2,10 @@ class Api::V1::CommentsController < ApplicationController
   skip_before_action :verify_authenticity_token, raise: false  
   skip_before_action :is_valid_token?, only: %i[create]
   before_action :authenticate_devise_api_token!, only: %i[destroy]
-  before_action :set_post
-  before_action :set_comment, only: %i[destroy]
+  before_action :set_post!
+  before_action :set_comment!, only: %i[destroy]
+
+  include Api::V1::ErrorHandling
 
   def create
     @comment = @post.comments.build comment_params
@@ -27,13 +29,11 @@ class Api::V1::CommentsController < ApplicationController
     params.require(:comment).permit(:author, :body)
   end
 
-  def set_post
+  def set_post!
     @post = Post.find params[:post_id]
   end
 
-  def set_comment
+  def set_comment!
     @comment = @post.comments.find params[:id]
   end
-  
-
 end
