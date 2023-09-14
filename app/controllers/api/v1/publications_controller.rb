@@ -39,7 +39,7 @@ class Api::V1::PublicationsController < ApplicationController
   private
 
   def publication_params
-    params.require(:publication).permit(:title, :year, :source, :source_url, :cover, :abstract, authors: [])
+    params.require(:publication).permit(:title, :year, :sequence_number, :source, :source_url, :cover, :abstract, authors: [])
   end
 
   def set_publication_period!

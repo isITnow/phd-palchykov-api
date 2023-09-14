@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_14_051551) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_14_073928) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -117,7 +117,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_14_051551) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "year", null: false
+    t.integer "sequence_number", null: false
     t.index ["publication_period_id"], name: "index_publications_on_publication_period_id"
+    t.index ["sequence_number"], name: "index_publications_on_sequence_number", unique: true
+    t.check_constraint "sequence_number > 0", name: "check_positive_sequence_number"
   end
 
   create_table "researches", force: :cascade do |t|
