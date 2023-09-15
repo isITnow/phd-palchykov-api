@@ -1,4 +1,4 @@
-class Api::V1::Publication < ApplicationRecord
+class Publication < ApplicationRecord
   belongs_to :publication_period
   
   has_one_attached :cover

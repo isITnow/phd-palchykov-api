@@ -1,4 +1,4 @@
-class Api::V1::PostSerializer < ActiveModel::Serializer
+class PostSerializer < ActiveModel::Serializer
   attributes :id, :created_at, :updated_at, :body, :comments
   
   has_many :comments, if: :show_or_update_action?

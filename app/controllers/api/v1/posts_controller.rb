@@ -1,12 +1,12 @@
 class Api::V1::PostsController < ApplicationController
-  skip_before_action :verify_authenticity_token, raise: false  
-  before_action :authenticate_devise_api_token!, only: %i[create update destroy]
+  # skip_before_action :verify_authenticity_token, raise: false  
+  # before_action :authenticate_devise_api_token!, only: %i[create update destroy]
   before_action :set_post!, except: %i[index create]
 
-  include Api::V1::ErrorHandling
+  # include Api::V1::ErrorHandling
 
   def index
-    @posts = Api::V1::Post.order(updated_at: :desc)
+    @posts = Post.order(updated_at: :desc)
 
     render json: @posts, status: :ok
   end
@@ -16,7 +16,7 @@ class Api::V1::PostsController < ApplicationController
   end
   
   def create
-    @post = Api::V1::User.first.posts.build post_params
+    @post = User.first.posts.build post_params
 
     if @post.save
       render json: @post, status: :created
@@ -46,6 +46,6 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def set_post!
-    @post = Api::V1::Post.find params[:id]
+    @post = Post.find params[:id]
   end
 end

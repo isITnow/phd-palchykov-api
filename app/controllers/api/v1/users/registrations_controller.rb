@@ -1,49 +1,34 @@
 # frozen_string_literal: true
 
 class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+  before_action :configure_sign_up_params, only: [:create]
+  respond_to :json
 
-  # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  private
 
-  # POST /resource
-  # def create
-  #   super
-  # end
+  def respond_with(resource, _opts = {})
+    if request.method == "POST" && resource.persisted?
+      render json: {
+        status: {code: 200, message: "Signed up sucessfully."},
+        data: resource
+      }, status: :ok
+    elsif request.method == "DELETE"
+      render json: {
+        status: { code: 200, message: "Account deleted successfully."}
+      }, status: :ok
+    else
+      render json: {
+        status: {code: 422, message: "User couldn't be created successfully. #{resource.errors.full_messages.to_sentence}"}
+      }, status: :unprocessable_entity
+    end
+  end
 
-  # GET /resource/edit
-  # def edit
-  #   super
-  # end
-
-  # PUT /resource
-  # def update
-  #   super
-  # end
-
-  # DELETE /resource
-  # def destroy
-  #   super
-  # end
-
-  # GET /resource/cancel
-  # Forces the session data which is usually expired after sign
-  # in to be expired now. This is useful if the user wants to
-  # cancel oauth signing in/up in the middle of the process,
-  # removing all OAuth session data.
-  # def cancel
-  #   super
-  # end
-
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[username role])
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
