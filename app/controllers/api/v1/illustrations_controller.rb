@@ -22,6 +22,6 @@ class Api::V1::IllustrationsController < ApplicationController
   end
 
   def set_research!
-    @research = Research.find params[:research_id]
+    @research = Api::V1::Research.find params[:research_id]
   end
 end

@@ -6,13 +6,13 @@ class Api::V1::PublicationPeriodsController < ApplicationController
   include Api::V1::ErrorHandling
 
   def index
-    @publication_periods = PublicationPeriod.all
+    @publication_periods = Api::V1::PublicationPeriod.all
 
     render json: @publication_periods, status: :ok
   end
 
   def create
-    @publication_period = PublicationPeriod.new publication_period_params
+    @publication_period = Api::V1::PublicationPeriod.new publication_period_params
 
     if @publication_period.save
       render json: @publication_period, status: :created
@@ -34,6 +34,6 @@ class Api::V1::PublicationPeriodsController < ApplicationController
   end
 
   def set_publication_period!
-    @publication_period = PublicationPeriod.find params[:id]
+    @publication_period = Api::V1::PublicationPeriod.find params[:id]
   end
 end

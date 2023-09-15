@@ -6,12 +6,12 @@ class Api::V1::ResearchesController < ApplicationController
   include Api::V1::ErrorHandling
 
   def index
-    @researches = Research.includes(:illustrations).order(created_at: :desc)
+    @researches = Api::V1::Research.includes(:illustrations).order(created_at: :desc)
     render json: @researches, status: :ok
   end
 
   def create
-    @research = Research.new research_params
+    @research = Api::V1::Research.new research_params
 
     if @research.save
       render json: @research, status: :created
@@ -33,6 +33,6 @@ class Api::V1::ResearchesController < ApplicationController
   end
 
   def set_research!
-    @research = Research.find params[:id]
+    @research = Api::V1::Research.find params[:id]
   end
 end

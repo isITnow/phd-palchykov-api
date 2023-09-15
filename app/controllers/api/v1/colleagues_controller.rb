@@ -6,13 +6,13 @@ class Api::V1::ColleaguesController < ApplicationController
   include Api::V1::ErrorHandling
   
   def index
-    @colleagues = Colleague.all
+    @colleagues = Api::V1::Colleague.all
 
     render json: @colleagues, status: :ok
   end
 
   def create
-    @colleague = Colleague.new colleague_params
+    @colleague = Api::V1::Colleague.new colleague_params
 
     if @colleague.save
       render json: @colleague, status: :created
@@ -43,6 +43,6 @@ class Api::V1::ColleaguesController < ApplicationController
   end
 
   def set_colleague!
-    @colleague = Colleague.find params[:id]
+    @colleague = Api::V1::Colleague.find params[:id]
   end
 end

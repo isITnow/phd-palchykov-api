@@ -30,7 +30,7 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def set_post!
-    @post = Post.find params[:post_id]
+    @post = Api::V1::Post.find params[:post_id]
   end
 
   def set_comment!

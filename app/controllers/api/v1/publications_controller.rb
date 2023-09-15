@@ -43,7 +43,7 @@ class Api::V1::PublicationsController < ApplicationController
   end
 
   def set_publication_period!
-    @publication_period = PublicationPeriod.find params[:publication_period_id]
+    @publication_period = Api::V1::PublicationPeriod.find params[:publication_period_id]
   end
   
   def set_publication!

@@ -6,7 +6,7 @@ class Api::V1::PostsController < ApplicationController
   include Api::V1::ErrorHandling
 
   def index
-    @posts = Post.order(updated_at: :desc)
+    @posts = Api::V1::Post.order(updated_at: :desc)
 
     render json: @posts, status: :ok
   end
@@ -16,7 +16,7 @@ class Api::V1::PostsController < ApplicationController
   end
   
   def create
-    @post = User.first.posts.build post_params
+    @post = Api::V1::User.first.posts.build post_params
 
     if @post.save
       render json: @post, status: :created
@@ -46,6 +46,6 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def set_post!
-    @post = Post.find params[:id]
+    @post = Api::V1::Post.find params[:id]
   end
 end
