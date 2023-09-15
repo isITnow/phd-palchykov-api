@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      devise_for :users
+      devise_for :users, class_name: 'Api::V1::User'
       
       resources :colleagues, except: %i[new edit show]
       resources :news, except: %i[new edit show]
