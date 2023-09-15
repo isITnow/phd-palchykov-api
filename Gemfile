@@ -44,6 +44,7 @@ gem "rack-cors"
 
 # Use Devise for handling authentication
 gem "devise", "~> 4.9"
+gem "devise-jwt"
 gem "devise-api", "~> 0.1.3"
 
 group :development, :test do
