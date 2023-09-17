@@ -10,7 +10,7 @@ class User < ApplicationRecord
   
   has_many :posts, dependent: :destroy
   
-  # validates :username, :email, :password, presence: true
+  validates :username, :email, :password, presence: true
 
   def jwt_payload
     super
