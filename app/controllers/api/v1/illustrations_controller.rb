@@ -1,9 +1,8 @@
 class Api::V1::IllustrationsController < ApplicationController
-  # skip_before_action :verify_authenticity_token, raise: false  
-  # before_action :authenticate_devise_api_token!, only: %i[create update destroy]
+  before_action :authenticate_user!
   before_action :set_research!
 
-  # include Api::V1::ErrorHandling
+  include Api::V1::ErrorHandling
 
   def create
     @illustration = @research.illustrations.build illustration_params

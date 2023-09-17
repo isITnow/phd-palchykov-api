@@ -1,9 +1,8 @@
 class Api::V1::NewsController < ApplicationController
-  # skip_before_action :verify_authenticity_token, raise: false  
-  # before_action :authenticate_devise_api_token!, only: %i[create update destroy]
+  before_action :authenticate_user!, except: %i[index]
   before_action :set_news!, except: %i[index create]
 
-  # include Api::V1::ErrorHandling
+  include Api::V1::ErrorHandling
 
   def index
     @news = News.all.order(created_at: :desc)
