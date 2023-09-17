@@ -1,4 +1,4 @@
-class Api::V1::Comment < ApplicationRecord
+class Comment < ApplicationRecord
   belongs_to :post
   
   validates :body, :author, presence: true

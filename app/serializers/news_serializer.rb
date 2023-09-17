@@ -1,4 +1,4 @@
-class Api::V1::NewsSerializer < ActiveModel::Serializer
+class NewsSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers  
   attributes :id, :title, :body, :image_url, :links, :date, :created_at
   

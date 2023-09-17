@@ -1,4 +1,4 @@
-class Api::V1::IllustrationSerializer < ActiveModel::Serializer
+class IllustrationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers  
   attributes :id, :description, :schema_url, :created_at
   

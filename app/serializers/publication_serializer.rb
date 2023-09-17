@@ -1,4 +1,4 @@
-class Api::V1::PublicationSerializer < ActiveModel::Serializer
+class PublicationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers  
   attributes :id, :publication_period_id, :year, :sequence_number, :title, :source, :source_url, :authors, :cover_url, :abstract_url, :created_at
   

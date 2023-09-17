@@ -45,7 +45,7 @@ gem "rack-cors"
 # Use Devise for handling authentication
 gem "devise", "~> 4.9"
 gem "devise-jwt"
-gem "devise-api", "~> 0.1.3"
+# gem "devise-api", "~> 0.1.3"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -1,6 +1,5 @@
 class Api::V1::PublicationsController < ApplicationController
-  skip_before_action :verify_authenticity_token, raise: false  
-  before_action :authenticate_devise_api_token!, only: %i[create update destroy]
+  before_action :authenticate_user!, except: %i[index]
   before_action :set_publication_period!
   before_action :set_publication!, only: %i[update destroy]
 
@@ -43,7 +42,7 @@ class Api::V1::PublicationsController < ApplicationController
   end
 
   def set_publication_period!
-    @publication_period = Api::V1::PublicationPeriod.find params[:publication_period_id]
+    @publication_period = PublicationPeriod.find params[:publication_period_id]
   end
   
   def set_publication!

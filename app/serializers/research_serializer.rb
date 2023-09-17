@@ -1,4 +1,4 @@
-class Api::V1::ResearchSerializer < ActiveModel::Serializer
+class ResearchSerializer < ActiveModel::Serializer
   attributes :id, :created_at, :payload, :illustrations
   
   has_many :illustrations

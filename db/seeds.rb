@@ -12,22 +12,22 @@ PublicationPeriod.find_or_create_by(title: "2011-2015")
 PublicationPeriod.find_or_create_by(title: "2005-2010")
 PublicationPeriod.find_or_create_by(title: "Books and chapters")
 
-User.first_or_create(username: "Rom the Dev",
-                      email: 'rom@example.com',
-                      password: 'password',
-                      password_confirmation: 'password',
-                      role: User.roles[:admin])
+# Api::V1::User.first_or_create(username: "Rom the Dev",
+#                       email: 'rom@example.com',
+#                       password: 'password',
+#                       password_confirmation: 'password',
+#                       role: User.roles[:admin])
 
-# 10.times do
-#   body = Faker::Lorem.paragraph(sentence_count: 5, supplemental: true, random_sentences_to_add: 4)
-#   Post.create(body:, user_id: User.first.id)
-# end
+10.times do
+  body = Faker::Lorem.paragraph(sentence_count: 5, supplemental: true, random_sentences_to_add: 4)
+  Post.create(body:, user_id: User.first.id)
+end
 
-# posts = Post.all
+posts = Post.all
 
-# posts.each do |post|
-#   5.times do
-#     body = Faker::Lorem.paragraph(sentence_count: 3, supplemental: true, random_sentences_to_add: 2)
-#     post.comments.create(body:)
-#   end
-# end
+posts.each do |post|
+  5.times do
+    body = Faker::Lorem.paragraph(sentence_count: 3, supplemental: true, random_sentences_to_add: 2)
+    post.comments.create(body:)
+  end
+end

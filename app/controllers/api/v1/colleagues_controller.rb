@@ -1,18 +1,17 @@
 class Api::V1::ColleaguesController < ApplicationController
-  skip_before_action :verify_authenticity_token, raise: false  
-  before_action :authenticate_devise_api_token!, only: %i[create update destroy]
+  before_action :authenticate_user!, except: %i[index]
   before_action :set_colleague!, only: %i[destroy update]
 
   include Api::V1::ErrorHandling
   
   def index
-    @colleagues = Api::V1::Colleague.all
+    @colleagues = Colleague.all
 
     render json: @colleagues, status: :ok
   end
 
   def create
-    @colleague = Api::V1::Colleague.new colleague_params
+    @colleague = Colleague.new colleague_params
 
     if @colleague.save
       render json: @colleague, status: :created
@@ -35,7 +34,6 @@ class Api::V1::ColleaguesController < ApplicationController
     head :no_content
   end
   
-  
   private
 
   def colleague_params
@@ -43,6 +41,6 @@ class Api::V1::ColleaguesController < ApplicationController
   end
 
   def set_colleague!
-    @colleague = Api::V1::Colleague.find params[:id]
+    @colleague = Colleague.find params[:id]
   end
 end

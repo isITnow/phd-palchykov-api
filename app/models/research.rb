@@ -1,4 +1,4 @@
-class Api::V1::Research < ApplicationRecord
+class Research < ApplicationRecord
   has_many :illustrations, dependent: :destroy
 end
 
