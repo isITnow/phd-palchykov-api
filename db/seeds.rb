@@ -6,24 +6,24 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Api::V1::PublicationPeriod.find_or_create_by(title: "2021-present")
-Api::V1::PublicationPeriod.find_or_create_by(title: "2016-2020")
-Api::V1::PublicationPeriod.find_or_create_by(title: "2011-2015")
-Api::V1::PublicationPeriod.find_or_create_by(title: "2005-2010")
-Api::V1::PublicationPeriod.find_or_create_by(title: "Books and chapters")
+PublicationPeriod.find_or_create_by(title: "2021-present")
+PublicationPeriod.find_or_create_by(title: "2016-2020")
+PublicationPeriod.find_or_create_by(title: "2011-2015")
+PublicationPeriod.find_or_create_by(title: "2005-2010")
+PublicationPeriod.find_or_create_by(title: "Books and chapters")
 
 # Api::V1::User.first_or_create(username: "Rom the Dev",
 #                       email: 'rom@example.com',
 #                       password: 'password',
 #                       password_confirmation: 'password',
-#                       role: Api::V1::User.roles[:admin])
+#                       role: User.roles[:admin])
 
 10.times do
   body = Faker::Lorem.paragraph(sentence_count: 5, supplemental: true, random_sentences_to_add: 4)
-  Api::V1::Post.create(body:, user_id: Api::V1::User.first.id)
+  Post.create(body:, user_id: User.first.id)
 end
 
-posts = Api::V1::Post.all
+posts = Post.all
 
 posts.each do |post|
   5.times do
