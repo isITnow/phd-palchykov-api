@@ -2,7 +2,7 @@ class Api::V1::PostsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_post!, except: %i[index create]
 
-  include Api::V1::ErrorHandling
+  include ErrorHandling
 
   def index
     @posts = Post.order(updated_at: :desc)

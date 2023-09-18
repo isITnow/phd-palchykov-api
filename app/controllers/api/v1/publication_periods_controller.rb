@@ -2,7 +2,7 @@ class Api::V1::PublicationPeriodsController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
   before_action :set_publication_period!, only: %i[destroy]
 
-  include Api::V1::ErrorHandling
+  include ErrorHandling
 
   def index
     @publication_periods = PublicationPeriod.all

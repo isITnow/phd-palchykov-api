@@ -3,7 +3,7 @@ class Api::V1::CommentsController < ApplicationController
   before_action :set_post!
   before_action :set_comment!, only: %i[destroy]
 
-  include Api::V1::ErrorHandling
+  include ErrorHandling
 
   def create
     @comment = @post.comments.build comment_params

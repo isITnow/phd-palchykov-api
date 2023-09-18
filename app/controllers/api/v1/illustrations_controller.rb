@@ -2,7 +2,7 @@ class Api::V1::IllustrationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_research!
 
-  include Api::V1::ErrorHandling
+  include ErrorHandling
 
   def create
     @illustration = @research.illustrations.build illustration_params

@@ -3,7 +3,7 @@ class Api::V1::PublicationsController < ApplicationController
   before_action :set_publication_period!
   before_action :set_publication!, only: %i[update destroy]
 
-  include Api::V1::ErrorHandling
+  include ErrorHandling
 
   def index
     @publications = @publication_period.publications.order(year: :desc)

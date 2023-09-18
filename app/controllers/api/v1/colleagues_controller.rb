@@ -2,7 +2,7 @@ class Api::V1::ColleaguesController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
   before_action :set_colleague!, only: %i[destroy update]
 
-  include Api::V1::ErrorHandling
+  include ErrorHandling
   
   def index
     @colleagues = Colleague.all

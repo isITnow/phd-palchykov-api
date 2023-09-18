@@ -2,7 +2,7 @@ class Api::V1::ResearchesController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
   before_action :set_research!, only: %i[destroy]
 
-  include Api::V1::ErrorHandling
+  include ErrorHandling
 
   def index
     @researches = Research.includes(:illustrations).order(created_at: :desc)
