@@ -3,6 +3,8 @@
 class Api::V1::Users::SessionsController < Devise::SessionsController
   respond_to :json
 
+  include ErrorHandling
+
   private
 
   def respond_with(current_user, _opts = {})
