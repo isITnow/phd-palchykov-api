@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_07_120408) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_15_171820) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,22 +60,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_120408) do
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
-  create_table "devise_api_tokens", force: :cascade do |t|
-    t.string "resource_owner_type", null: false
-    t.bigint "resource_owner_id", null: false
-    t.string "access_token", null: false
-    t.string "refresh_token"
-    t.integer "expires_in", null: false
-    t.datetime "revoked_at"
-    t.string "previous_refresh_token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["access_token"], name: "index_devise_api_tokens_on_access_token"
-    t.index ["previous_refresh_token"], name: "index_devise_api_tokens_on_previous_refresh_token"
-    t.index ["refresh_token"], name: "index_devise_api_tokens_on_refresh_token"
-    t.index ["resource_owner_type", "resource_owner_id"], name: "index_devise_api_tokens_on_resource_owner"
-  end
-
   create_table "illustrations", force: :cascade do |t|
     t.text "description", null: false
     t.bigint "research_id", null: false
@@ -105,6 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_120408) do
     t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_publication_periods_on_title", unique: true
   end
 
   create_table "publications", force: :cascade do |t|
@@ -116,7 +101,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_120408) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "year", null: false
+    t.integer "sequence_number", null: false
     t.index ["publication_period_id"], name: "index_publications_on_publication_period_id"
+    t.index ["sequence_number"], name: "index_publications_on_sequence_number", unique: true
+    t.check_constraint "sequence_number > 0", name: "check_positive_sequence_number"
   end
 
   create_table "researches", force: :cascade do |t|
@@ -135,7 +123,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_120408) do
     t.datetime "updated_at", null: false
     t.integer "role", default: 0
     t.string "username", null: false
+    t.string "jti", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

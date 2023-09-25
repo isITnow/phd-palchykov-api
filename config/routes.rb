@@ -1,8 +1,21 @@
 Rails.application.routes.draw do
+  scope :api do
+    scope :v1 do
+      devise_for :users, path: '', path_names: {
+              sign_in: 'login',
+              sign_out: 'logout',
+              registration: 'signup'
+            },
+            controllers: {
+              sessions: 'api/v1/users/sessions',
+              registrations: 'api/v1/users/registrations'
+            }
+    end
+  end
+
   namespace :api do
     namespace :v1 do
-      devise_for :users
-      
+  
       resources :colleagues, except: %i[new edit show]
       resources :news, except: %i[new edit show]
 
@@ -18,6 +31,7 @@ Rails.application.routes.draw do
         resources :illustrations, only: %i[create]
       end
     end
+
   end
 
   # root "articles#index"

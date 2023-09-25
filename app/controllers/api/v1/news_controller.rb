@@ -1,12 +1,13 @@
 class Api::V1::NewsController < ApplicationController
-  skip_before_action :verify_authenticity_token, raise: false  
-  before_action :authenticate_devise_api_token!, only: %i[create update destroy]
-  before_action :set_news, except: %i[index create]
+  before_action :authenticate_user!, except: %i[index]
+  before_action :set_news!, except: %i[index create]
+
+  include ErrorHandling
 
   def index
     @news = News.all.order(created_at: :desc)
 
-    render json: @news, status: 200
+    render json: @news, status: :ok
   end
 
   def create  
@@ -15,7 +16,7 @@ class Api::V1::NewsController < ApplicationController
     if @news.save
       render json: @news, status: :created
     else
-      render json: @news.errors.full_messages, status: :unprocessable_entity
+      render json: { errors: @news.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -23,7 +24,7 @@ class Api::V1::NewsController < ApplicationController
     if @news.update news_params
       render json: @news, status: :accepted
     else
-      render json: @news.errors.full_messages, status: :unprocessable_entity
+      render json: { errors: @news.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -39,8 +40,7 @@ class Api::V1::NewsController < ApplicationController
     params.require(:news).permit(:title, :body, :date, :image, links: [])
   end
 
-  def set_news
+  def set_news!
     @news = News.find params[:id]
   end
-
 end

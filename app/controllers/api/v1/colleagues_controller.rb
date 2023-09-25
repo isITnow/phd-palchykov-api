@@ -1,12 +1,13 @@
 class Api::V1::ColleaguesController < ApplicationController
-  skip_before_action :verify_authenticity_token, raise: false  
-  before_action :authenticate_devise_api_token!, only: %i[create update destroy]
-  before_action :set_colleague, only: %i[destroy update]
+  before_action :authenticate_user!, except: %i[index]
+  before_action :set_colleague!, only: %i[destroy update]
 
+  include ErrorHandling
+  
   def index
     @colleagues = Colleague.all
 
-    render json: @colleagues, status: 200
+    render json: @colleagues, status: :ok
   end
 
   def create
@@ -15,7 +16,7 @@ class Api::V1::ColleaguesController < ApplicationController
     if @colleague.save
       render json: @colleague, status: :created
     else
-      render json: @colleague.errors.full_messages, status: :unprocessable_entity
+      render json: { error: @colleague.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -23,7 +24,7 @@ class Api::V1::ColleaguesController < ApplicationController
     if @colleague.update colleague_params
       render json: @colleague, status: :accepted
     else
-      render json: @colleague.errors.full_messages, status: :unprocessable_entity
+      render json: { error: @colleague.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -33,15 +34,13 @@ class Api::V1::ColleaguesController < ApplicationController
     head :no_content
   end
   
-  
   private
 
   def colleague_params
     params.require(:colleague).permit(:name, :position, :email, :phone, :photo)
   end
 
-  def set_colleague
+  def set_colleague!
     @colleague = Colleague.find params[:id]
   end
-  
 end

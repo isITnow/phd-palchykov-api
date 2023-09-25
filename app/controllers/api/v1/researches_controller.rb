@@ -1,12 +1,12 @@
 class Api::V1::ResearchesController < ApplicationController
-  skip_before_action :verify_authenticity_token, raise: false  
-  before_action :authenticate_devise_api_token!, only: %i[create destroy]
-  before_action :set_research, only: :destroy
+  before_action :authenticate_user!, except: %i[index]
+  before_action :set_research!, only: %i[destroy]
 
+  include ErrorHandling
 
   def index
     @researches = Research.includes(:illustrations).order(created_at: :desc)
-    render json: @researches, status: 200 
+    render json: @researches, status: :ok
   end
 
   def create
@@ -15,7 +15,7 @@ class Api::V1::ResearchesController < ApplicationController
     if @research.save
       render json: @research, status: :created
     else
-      render json: @research.errors, status: :unprocessable_entity
+      render json: { error: @research.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -31,9 +31,7 @@ class Api::V1::ResearchesController < ApplicationController
     params.require(:research).permit(:payload)
   end
 
-  def set_research
+  def set_research!
     @research = Research.find params[:id]
   end
-  
-  
 end
