@@ -81,4 +81,6 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  database: phd_palchykov_api_production
+  username: phd_palchykov_api
+  password: <%= ENV["PHD_PALCHYKOV_API_DATABASE_PASSWORD"] %>
