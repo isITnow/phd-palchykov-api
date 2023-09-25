@@ -1,7 +1,8 @@
 class Comment < ApplicationRecord
   belongs_to :post
   
-  validates :body, :author, presence: true
+  validates :author, presence: true
+  validates :body, presence: true, length: { minimum: 5, maximum: 700 }
   
   before_validation :ensure_author_has_a_value
   
