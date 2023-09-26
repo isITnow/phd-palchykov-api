@@ -6,12 +6,4 @@ class ApplicationController < ActionController::API
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[username role])
     devise_parameter_sanitizer.permit(:account_update, keys: %i[username role])
   end
-
-  def default_url_options
-    if Rails.env.production?
-      { host: "https://phd-palchykov-api.onrender.com" }
-    else  
-      {}
-    end
-  end
 end
