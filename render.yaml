@@ -1,0 +1,18 @@
+databases:
+  - name: phd-palchykov
+    databaseName: phd_palchykov
+    user: phd_palchykov_user
+
+services:
+  - type: web
+    name: phd-palchykov-api
+    runtime: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: phd_palchykov
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
