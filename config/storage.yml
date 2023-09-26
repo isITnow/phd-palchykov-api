@@ -21,3 +21,4 @@ google:
     client_x509_cert_url: <%= Rails.application.credentials.dig(:gcskey, :client_x509_cert_url) %>
   project: "phd-palchykov"
   bucket: "phd-palchykov-storage"
+  public: true
