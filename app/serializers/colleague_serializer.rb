@@ -14,7 +14,7 @@ class ColleagueSerializer < ActiveModel::Serializer
   # end
   def photo_url
     if object.photo.attached?
-      rails_blob_url(object.photo)
+      rails_blob_url(object.photo, default_url_options[:host])
     end
   end
 end
