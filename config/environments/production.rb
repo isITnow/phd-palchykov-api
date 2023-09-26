@@ -23,6 +23,9 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
 
+  # For generating absolute urls with routing url helpers.
+  config.routes.default_url_options[:host] = 'https://phd-palchykov-api.onrender.com'
+
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
