@@ -6,7 +6,7 @@ class Api::V1::PublicationsController < ApplicationController
   include ErrorHandling
 
   def index
-    @publications = @publication_period.publications.order(year: :desc)
+    @publications = @publication_period.publications.order(sequence_number: :desc)
 
     render json: @publications, status: :ok
   end
