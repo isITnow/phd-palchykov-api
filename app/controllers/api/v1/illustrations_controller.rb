@@ -17,7 +17,7 @@ class Api::V1::IllustrationsController < ApplicationController
   private
 
   def illustration_params
-    params.require(:illustration).permit(:description, :schema)
+    params.require(:illustration).permit(:description, :schema, :sequence_number)
   end
 
   def set_research!

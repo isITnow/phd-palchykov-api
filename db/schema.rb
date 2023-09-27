@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_15_171820) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_27_140135) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,7 +65,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_171820) do
     t.bigint "research_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sequence_number", null: false
     t.index ["research_id"], name: "index_illustrations_on_research_id"
+    t.check_constraint "sequence_number > 0", name: "check_positive_sequence_number"
   end
 
   create_table "news", force: :cascade do |t|
@@ -73,6 +75,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_171820) do
     t.text "body"
     t.string "date", default: ""
     t.string "links", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "photo_albums", force: :cascade do |t|
+    t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
