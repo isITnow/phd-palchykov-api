@@ -4,13 +4,13 @@ class PublicationSerializer < ActiveModel::Serializer
   
   def cover_url
     if object.cover.attached?
-      rails_blob_url(object.cover, only_path: true)
+      url_for(object.cover)
     end
   end
   
   def abstract_url
     if object.abstract.attached?
-      rails_blob_url(object.abstract, only_path: true)
+      url_for(object.abstract)
     end
   end
 end

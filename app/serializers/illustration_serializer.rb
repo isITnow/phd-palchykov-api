@@ -6,7 +6,7 @@ class IllustrationSerializer < ActiveModel::Serializer
   
   def schema_url
     if object.schema.attached?
-      rails_blob_url(object.schema, only_path: true)
+      url_for(object.schema)
     end
   end
 end

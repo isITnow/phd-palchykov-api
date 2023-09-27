@@ -4,7 +4,7 @@ class NewsSerializer < ActiveModel::Serializer
   
   def image_url
     if object.image.attached?
-      rails_blob_url(object.image, only_path: true)
+      url_for(object.image)
     end
   end
 end
