@@ -3,6 +3,10 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Configure default :host for url helpers in rails
+  config.action_mailer.default_url_options = { host: 'https://phd-palchykov-api.onrender.com' }
+
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 

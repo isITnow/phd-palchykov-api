@@ -4,7 +4,12 @@ class ColleagueSerializer < ActiveModel::Serializer
 
   def photo_url
     if object.photo.attached?
-      rails_blob_url(object.photo, only_path: true)
+      url_for(object.photo)
     end
   end
+  # def photo_url
+  #   if object.photo.attached?
+  #     rails_blob_url(object.photo, only_path: true)
+  #   end
+  # end
 end
