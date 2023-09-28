@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   
       resources :colleagues, except: %i[new edit show]
       resources :news, except: %i[new edit show]
+      resources :photo_albums, except: %i[new edit]
 
       resources :posts, except: %i[new edit] do
         resources :comments, only: %i[create destroy]
