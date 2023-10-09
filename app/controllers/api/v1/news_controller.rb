@@ -21,6 +21,11 @@ class Api::V1::NewsController < ApplicationController
   end
 
   def update
+    if news_params[:image]
+      # Delete the old attached image
+      @news.image.purge
+    end
+
     if @news.update news_params
       render json: @news, status: :accepted
     else

@@ -21,6 +21,11 @@ class Api::V1::ColleaguesController < ApplicationController
   end
 
   def update
+    if colleague_params[:photo]
+      # Delete the old attached photo
+      @colleague.photo.purge
+    end
+
     if @colleague.update colleague_params
       render json: @colleague, status: :accepted
     else

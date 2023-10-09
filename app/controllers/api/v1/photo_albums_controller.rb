@@ -32,6 +32,11 @@ class Api::V1::PhotoAlbumsController < ApplicationController
   end
 
   def update
+    if photo_album_params[:cover_image]
+    # Delete the old attached cover_image
+      @photo_album.cover_image.purge
+    end
+
     if @photo_album.update(photo_album_params.reject { |k| k["pictures"] })
       if photo_album_params[:pictures].present?
         photo_album_params[:pictures].each do |picture|
@@ -44,18 +49,16 @@ class Api::V1::PhotoAlbumsController < ApplicationController
     end
   end
   
-
   def destroy
     @photo_album.destroy
 
     head :no_content
   end
   
-
   private
 
   def photo_album_params
-    params.require(:photo_album).permit(:title, :cover_image ,pictures: [])
+    params.require(:photo_album).permit(:title, :cover_image, pictures: [])
   end
 
   def set_photo_album!

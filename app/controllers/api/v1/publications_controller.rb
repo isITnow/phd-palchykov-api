@@ -22,6 +22,16 @@ class Api::V1::PublicationsController < ApplicationController
   end
 
   def update
+    if publication_params[:cover]
+      # Delete the old attached cover
+      @publication.cover.purge
+    end
+
+    if publication_params[:abstract]
+      # Delete the old attached abstract
+      @publication.abstract.purge
+    end
+    
     if @publication.update publication_params
       render json: @publication, status: :accepted
     else
