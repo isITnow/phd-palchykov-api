@@ -1,6 +1,6 @@
 class Api::V1::ResearchesController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
-  before_action :set_research!, only: %i[destroy]
+  before_action :set_research!, only: %i[destroy update]
 
   include ErrorHandling
 
@@ -15,6 +15,14 @@ class Api::V1::ResearchesController < ApplicationController
 
     if @research.save
       render json: @research, status: :created
+    else
+      render json: { error: @research.errors.full_messages.to_sentence }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @research.update research_params
+      render json: @research, status: :accepted
     else
       render json: { error: @research.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end

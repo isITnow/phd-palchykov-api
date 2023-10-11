@@ -1,6 +1,6 @@
 class IllustrationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers  
-  attributes :id, :description, :schema_url, :created_at
+  attributes :id, :sequence_number, :description, :schema_url, :created_at
   
   belongs_to :research
   
