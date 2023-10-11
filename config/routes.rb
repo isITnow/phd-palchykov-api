@@ -28,8 +28,8 @@ Rails.application.routes.draw do
         resources :publications, except: %i[new edit show]
       end
 
-      resources :researches, only: %i[index create destroy] do
-        resources :illustrations, only: %i[create]
+      resources :researches, except: %i[new edit show] do
+        resources :illustrations, only: %i[create update delete]
       end
     end
 
