@@ -1,6 +1,7 @@
 class Colleague < ApplicationRecord
   has_one_attached :photo
   
-  validates :name, :photo, :position, presence: true
+  validates :name, :position, presence: true, length: { minimum: 5 }
+  validates :photo
 end
 
