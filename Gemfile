@@ -51,10 +51,14 @@ gem "google-cloud-storage", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  # Generates fake text data
-  gem 'faker', '~> 3'
   # Store environment variables
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
+  # Generates fake text data
+  gem 'faker', '~> 3'
+  # RSpec gem
+  gem 'rspec-rails', '~> 6.0.0'
+  gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :development do
