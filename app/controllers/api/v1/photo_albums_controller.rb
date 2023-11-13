@@ -7,11 +7,11 @@ class Api::V1::PhotoAlbumsController < ApplicationController
   def index
     @photo_albums = PhotoAlbum.all
 
-    render json: @photo_albums, status: :ok
+    render json: @photo_albums, action_name: action_name, status: :ok
   end
 
   def show
-    render json: @photo_album, status: :ok
+    render json: @photo_album, action_name: action_name, status: :ok
   end
   
   def create
