@@ -43,7 +43,7 @@ class Api::V1::PhotoAlbumsController < ApplicationController
           @photo_album.pictures.attach(picture)
         end
       end
-      render json: @photo_album, status: :ok
+      render json: @photo_album, status: :accepted
     else
       render json: { error: @photo_album.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
