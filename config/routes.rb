@@ -31,9 +31,10 @@ Rails.application.routes.draw do
       resources :researches, except: %i[new edit show] do
         resources :illustrations, only: %i[create update delete]
       end
-    end
 
+      delete 'attachments/:id/purge', to: 'attachments#purge', as: 'purge_attachment'
+    end
   end
 
-  # root "articles#index"
+  # TODO: root route
 end
