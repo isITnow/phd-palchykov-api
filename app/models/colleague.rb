@@ -3,5 +3,6 @@ class Colleague < ApplicationRecord
   
   validates :name, :position, presence: true, length: { minimum: 5 }
   validates :photo, presence: true
+  validates :name, :email, uniqueness: true
 end
 
