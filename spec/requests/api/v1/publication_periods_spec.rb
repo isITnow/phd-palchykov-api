@@ -8,19 +8,10 @@ describe "Api::V1::PublicationPeriods", type: :request do
     end
 
     it "returns publication periods" do
-      periods = [
-        "2021-present",
-        "2016-2020",
-        "2011-2015","2005-2010",
-        "Books and chapters"
-      ]
-
-      periods.each do |period|
-          create(:publication_period, title: period)
-      end
-    
-    get api_v1_publication_periods_path
-    expect(JSON.parse(response.body).length).to eq(5)  
+      periods = create_list(:publication_period, 5)
+      
+      get api_v1_publication_periods_path
+      expect(JSON.parse(response.body).length).to eq(5)  
     end
   end
 
@@ -73,7 +64,7 @@ describe "Api::V1::PublicationPeriods", type: :request do
     before { sign_in user }
 
     let(:publication_period) {create(:publication_period)}
-    let(:publication_period_2) {create(:publication_period, title: "1986-1999")}
+    let(:publication_period_2) {create(:publication_period)}
 
     context "with no user signed in" do
       it "returns an unauthorized response" do
@@ -90,11 +81,11 @@ describe "Api::V1::PublicationPeriods", type: :request do
       end
       
       it "deletes a PublicationPeriod" do
-        period = publication_period
-        period_2 = publication_period_2
+        publication_period
+        publication_period_2
 
         expect {
-          delete api_v1_publication_period_path(period_2)
+          delete api_v1_publication_period_path(publication_period_2)
         }.to change(PublicationPeriod, :count).by(-1)
       end
     end
@@ -104,9 +95,6 @@ describe "Api::V1::PublicationPeriods", type: :request do
         delete api_v1_publication_period_path(id: -1)
         expect(response).to have_http_status(:not_found)
       end
-      
     end
-    
   end
-  
 end
