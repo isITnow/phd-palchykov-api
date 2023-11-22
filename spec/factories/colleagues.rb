@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :colleague do
-    email { Faker::Internet.email}
-    name { Faker::Name.name }
+    sequence(:email) { Faker::Internet.email}
+    sequence(:name) { Faker::Name.name }
     phone { Faker::PhoneNumber.phone_number_with_country_code }
     photo { 
       {
