@@ -24,7 +24,7 @@ class Api::V1::CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:author, :body)
+    params.require(:comment).permit(:author, :body, :comment_image)
   end
 
   def set_post!
