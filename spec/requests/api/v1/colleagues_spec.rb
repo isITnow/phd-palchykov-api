@@ -20,53 +20,67 @@ describe "Api::V1::Colleagues", type: :request do
   end
 
   describe "POST /api/v1/colleagues" do
+    let(:valid_params) do
+      {
+        colleague: {
+          name: 'John Doe',
+          position: 'Engineer',
+          email: 'john@example.com',
+          phone: '1234567890',
+          photo: fixture_file_upload('spec/fixtures/default_image.jpg', 'image/jpeg')
+        }
+      }
+    end
+
+    let(:invalid_params) do
+      {
+        colleague: {
+          name: '',
+          position: '',
+          photo: nil
+        }
+      }
+    end
+
     context "with no user signed in" do
       it "returns an unauthorized response" do
         sign_out user
 
-        post api_v1_colleagues_path params: { colleague: colleague }
+        post api_v1_colleagues_path params: valid_params
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
-    # TODO: fix photo attachment
+    context "with valid params" do
+      it "returns a successful response" do
+        post '/api/v1/colleagues', params: valid_params
+        expect(response).to have_http_status(:created)
+      end
+      
+      it 'creates a new colleague' do
+        expect do
+          post '/api/v1/colleagues', params: valid_params
+        end.to change(Colleague, :count).by(1)
+      end
+    end
 
-    # context "with valid params" do
-    #   let(:params) do
-    #     { colleague: {
-    #         name: "Tomas",
-    #         position: "colleague",
-    #         photo: fixture_file_upload(Rails.root.join('spec/fixtures/default_image.jpg'), 'image/jpeg')
-    #       }
-    #     }
-    #   end
+    context "with invalid params" do
+      it "returns failure response and error message" do
+        post '/api/v1/colleagues', params: invalid_params
+        expect(response).to have_http_status(:unprocessable_entity)
 
-
-        
-    #   it "returns a successful response" do
-    #     # puts valid_attributes.inspect
-    #     post api_v1_colleagues_path params: params
-    #     puts response.body.inspect
-    #     expect(response).to have_http_status(:created)
-    #   end
-    # end
-
-    # context "with invalid params" do
-    #   context "attribute absence" do
-    #     let(:invalid_attributes) { { name: "Tomas", position: "colleague" } }
-
-    #     it "returns failure response" do
-    #       post api_v1_colleagues_path params: {colleague: invalid_attributes}
-    #       expect(response).to have_http_status(:unprocessable_entity)
-    #     end
-
-    #     it "does not create a new Colleague" do
-    #       expect {
-    #         post api_v1_colleagues_path params: {colleague: invalid_attributes}
-    #       }.to change(Colleague, :count).by(0)
-    #     end
-    #   end
-    # end
+        expect(JSON.parse(response.body)['error']).to include("Name can't be blank",
+          "Position is too short (minimum is 5 characters)",
+          "Photo can't be blank",
+          "Name is too short (minimum is 5 characters)")
+      end
+      
+      it 'does not create a new colleague' do
+        expect do
+          post '/api/v1/colleagues', params: invalid_params
+        end.not_to change(Colleague, :count)
+      end
+    end
   end
 
   describe "PATCH /api/v1/colleague/:id" do
@@ -98,7 +112,8 @@ describe "Api::V1::Colleagues", type: :request do
           patch api_v1_colleague_path(colleague), params: { colleague: { name: nil } }
           expect(response).to have_http_status(:unprocessable_entity)
         end
-        it "does not update Colleague" do
+        
+        it "does not update the colleague" do
           patch api_v1_colleague_path(colleague), params: { colleague: { name: nil } }
           @colleague = Colleague.find colleague.id
           expect(@colleague.name).to eq(colleague.name)
