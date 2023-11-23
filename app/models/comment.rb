@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
   belongs_to :post
+  has_one_attached :comment_image
   
   validates :author, presence: true
   validates :body, presence: true, length: { minimum: 5, maximum: 700 }
