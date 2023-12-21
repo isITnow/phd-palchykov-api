@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'home#welcome'
+
   scope :api do
     scope :v1 do
       devise_for :users, path: '', path_names: {
@@ -35,6 +37,4 @@ Rails.application.routes.draw do
       delete 'attachments/:id/purge', to: 'attachments#purge', as: 'purge_attachment'
     end
   end
-
-  # TODO: root route
 end
