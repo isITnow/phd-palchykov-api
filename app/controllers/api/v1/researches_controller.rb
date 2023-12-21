@@ -5,7 +5,7 @@ class Api::V1::ResearchesController < ApplicationController
   include ErrorHandling
 
   def index
-    @researches = Research.includes(:illustrations).order(created_at: :desc, 'illustrations.sequence_number' => :asc)
+    @researches = Research.includes(:illustrations).order(created_at: :desc)
 
     render json: @researches, status: :ok
   end

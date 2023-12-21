@@ -1,4 +1,4 @@
 class Research < ApplicationRecord
-  has_many :illustrations, dependent: :destroy
+  has_many :illustrations, -> { order(sequence_number: :asc) }, dependent: :destroy
 end
 
