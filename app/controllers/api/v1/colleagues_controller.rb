@@ -5,7 +5,7 @@ class Api::V1::ColleaguesController < ApplicationController
   include ErrorHandling
   
   def index
-    @colleagues = Colleague.all
+    @colleagues = Colleague.order(id: :asc)
 
     render json: @colleagues, status: :ok
   end
