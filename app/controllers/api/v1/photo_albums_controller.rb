@@ -5,7 +5,7 @@ class Api::V1::PhotoAlbumsController < ApplicationController
   include ErrorHandling
 
   def index
-    @photo_albums = PhotoAlbum.all
+    @photo_albums = PhotoAlbum.order(updated_at: :desc)
 
     render json: @photo_albums, action_name: action_name, status: :ok
   end
