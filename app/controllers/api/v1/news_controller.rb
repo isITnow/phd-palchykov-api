@@ -16,7 +16,7 @@ class Api::V1::NewsController < ApplicationController
     if @news.save
       render json: @news, status: :created
     else
-      render json: { errors: @news.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { error: @news.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V1::NewsController < ApplicationController
     if @news.update news_params
       render json: @news, status: :accepted
     else
-      render json: { errors: @news.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { error: @news.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
