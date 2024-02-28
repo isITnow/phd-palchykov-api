@@ -4,7 +4,7 @@ module AttachedImageValidation
   included do
     private
 
-    def validate_attached_image(attachment, required_size)
+    def validate_attached_image attachment, required_size
       if attachment.present?
         unless attachment.content_type.in?(%w(image/png image/jpg image/jpeg image/gif image/webp))
           errors.add(attachment.name, 'must be a PNG, JPG, JPEG, WEBP or GIF')
