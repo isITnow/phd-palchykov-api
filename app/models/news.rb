@@ -5,7 +5,7 @@ class News < ApplicationRecord
 
   has_one_attached :image
 
-  validates :body, length: { minimum: 10 }
+  validates :body, length: { minimum: 10 }, allow_blank: true
   validates :date, presence: true
   validates :title, presence: true, length: { minimum: 5, maximum: 150 }
   
