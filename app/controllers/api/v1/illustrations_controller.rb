@@ -16,16 +16,7 @@ class Api::V1::IllustrationsController < ApplicationController
   end
 
   def update
-    if illustration_params[:schema]
-      # Delete the old attached schema
-      @illustration.schema.purge
-    end
-
-    if @illustration.update illustration_params
-      render json: @illustration, status: :accepted
-    else
-      render json: { error: @illustration.errors.full_messages.to_sentence }, status: :unprocessable_entity
-    end
+    update_item_with_image_attached @illustration, :schema, illustration_params
   end
 
   def destroy

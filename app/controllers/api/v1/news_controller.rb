@@ -21,16 +21,7 @@ class Api::V1::NewsController < ApplicationController
   end
 
   def update
-    if news_params[:image]
-      # Delete the old attached image
-      @news.image.purge
-    end
-
-    if @news.update news_params
-      render json: @news, status: :accepted
-    else
-      render json: { error: @news.errors.full_messages.to_sentence }, status: :unprocessable_entity
-    end
+    update_item_with_image_attached @news, :image, news_params
   end
 
   def destroy

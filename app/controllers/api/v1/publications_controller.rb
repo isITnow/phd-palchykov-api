@@ -22,20 +22,15 @@ class Api::V1::PublicationsController < ApplicationController
   end
 
   def update
-    if publication_params[:cover]
-      # Delete the old attached cover
-      @publication.cover.purge
-    end
-
-    if publication_params[:abstract]
-      # Delete the old attached abstract
-      @publication.abstract.purge
-    end
+    old_cover_blob = @publication.cover.blob if @publication.cover.attached? && publication_params[:cover]
+    old_abstract_blob = @publication.abstract.blob if @publication.abstract.attached? && publication_params[:abstract]
     
     if @publication.update publication_params
       render json: @publication, status: :accepted
     else
       render json: { error: @publication.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      reattach_image @publication, :cover, old_cover_blob if old_cover_blob .present?
+      reattach_image @publication, :abstract, old_abstract_blob if old_abstract_blob.present?
     end
   end
 
