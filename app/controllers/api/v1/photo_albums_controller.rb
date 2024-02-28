@@ -32,48 +32,27 @@ class Api::V1::PhotoAlbumsController < ApplicationController
   end
 
   def update
-  if photo_album_params[:cover_image]
-    # Delete the old attached cover_image
-    @photo_album.cover_image.purge
-  end
+    # Store the old cover_image blob if it exists
+    old_cover_image_blob = @photo_album.cover_image.blob if @photo_album.cover_image.attached? && photo_album_params[:cover_image]
 
-  @photo_album.assign_attributes(photo_album_params.reject { |k| k["pictures"] })
-  if @photo_album.valid?
-    if photo_album_params[:pictures].present?
-      photo_album_params[:pictures].each do |picture|
-        @photo_album.pictures.attach(picture)
+    @photo_album.assign_attributes(photo_album_params.reject { |k| k["pictures"] })
+    if @photo_album.valid?
+      if photo_album_params[:pictures].present?
+        photo_album_params[:pictures].each do |picture|
+          @photo_album.pictures.attach(picture)
+        end
       end
-    end
-    if @photo_album.save
-      render json: @photo_album, status: :accepted
+      if @photo_album.save
+        render json: @photo_album, status: :accepted
+      else
+        # Use general method to render response json and reattach cover_image        
+        error_response_with_image_reattach @photo_album, :cover_image, old_cover_image_blob
+      end
     else
-      render json: { error: @photo_album.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      # Use general method to render response json and reattach cover_image        
+      error_response_with_image_reattach @photo_album, :cover_image, old_cover_image_blob
     end
-  else
-    render json: { error: @photo_album.errors.full_messages.to_sentence }, status: :unprocessable_entity
   end
-end
-
-# !!!!! The next variant does not abort action if there are pictures validation errors
-
-  # def update
-  #   if photo_album_params[:cover_image]
-  #   # Delete the old attached cover_image
-  #     @photo_album.cover_image.purge
-  #   end
-
-  #   if @photo_album.update(photo_album_params.reject { |k| k["pictures"] })
-  #     if photo_album_params[:pictures].present?
-  #       photo_album_params[:pictures].each do |picture|
-  #         @photo_album.pictures.attach(picture)
-  #       end
-  #     end
-  #     render json: @photo_album, status: :accepted
-  #   else
-  #     render json: { error: @photo_album.errors.full_messages.to_sentence }, status: :unprocessable_entity
-  #     return
-  #   end
-  # end
   
   def destroy
     @photo_album.destroy
