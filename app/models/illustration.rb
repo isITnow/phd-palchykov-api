@@ -7,7 +7,7 @@ class Illustration < ApplicationRecord
   has_one_attached :schema
   
   validates :description, :schema, presence: true
-  validates :scema, presence: { message: 'must be attached' }, on: :create
+  validates :schema, presence: { message: 'must be attached' }, on: :create
 
   validate do
     validate_attached_image schema, 1
