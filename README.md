@@ -1,24 +1,27 @@
-# README
+## Description
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a Ruby on Rails API application designed to serve as a backend for a React web application [palchykovchem.vercel.app](https://palchykovchem.vercel.app/). It provides the necessary endpoints and functionalities to interact with the frontend application.
 
-Things you may want to cover:
+## Dependencies
 
-* Ruby version
+- Ruby 3.1.1
+- Rails 7.0.7
+- PostgreSQL (pg gem)
+- Puma web server (puma gem)
+- Active Storage (activestorage gem)
+- Active Model Serializers (active_model_serializers gem)
+- Rack CORS for Cross-Origin Resource Sharing (rack-cors gem)
+- Devise for authentication (devise and devise-jwt gems)
+- Google Cloud Storage (google-cloud-storage gem)
+- Image Processing (image_processing gem)
+- Bootsnap for boot time optimization (bootsnap gem)
+- tzinfo-data for time zone information (tzinfo-data gem)
 
-* System dependencies
+### Development and Testing Dependencies
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Debugging tools (debug gem)
+- Environment variables management (dotenv-rails gem)
+- FactoryBot for test data generation (factory_bot_rails gem)
+- Faker for generating fake data (faker gem)
+- RSpec for testing (rspec-rails gem)
+- Shoulda Matchers for RSpec (shoulda-matchers gem)
