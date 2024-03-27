@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
   # Include default devise modules. Others available are:
@@ -11,8 +13,9 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
 
   validates :username, :email, :password, presence: true
-
+  # rubocop:disable Lint/UselessMethodDefinition
   def jwt_payload
     super
   end
+  # rubocop:enable Lint/UselessMethodDefinition
 end
