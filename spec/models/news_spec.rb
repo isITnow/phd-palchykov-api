@@ -6,23 +6,24 @@ describe News do
   let(:news) { create(:news) }
 
   describe '#ensure_date_has_a_value' do
+    current_date = Time.zone.now.strftime('%B %e, %Y')
     context 'when date present' do
       it 'does not set the date to default (current date)' do
-        expect(news.date).to eq(news.date)
+        expect(news.date).not_to eq(current_date)
       end
     end
 
     context 'when date is not present' do
       it 'sets the date to default (current date)' do
         news = create(:news, date: nil)
-        expect(news.date).to eq(Time.zone.now.strftime('%B %e, %Y'))
+        expect(news.date).to eq(current_date)
       end
     end
 
     context 'when date is blank' do
       it 'sets the date to default (current date)' do
         news = create(:news, date: '')
-        expect(news.date).to eq(Time.zone.now.strftime('%B %e, %Y'))
+        expect(news.date).to eq(current_date)
       end
     end
   end
