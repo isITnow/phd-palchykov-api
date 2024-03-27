@@ -3,7 +3,7 @@ class Api::V1::ColleaguesController < ApplicationController
   before_action :set_colleague!, only: %i[destroy update]
 
   include ErrorHandling
-  
+
   def index
     @colleagues = Colleague.order(id: :asc)
 
@@ -29,7 +29,7 @@ class Api::V1::ColleaguesController < ApplicationController
 
     head :no_content
   end
-  
+
   private
 
   def colleague_params

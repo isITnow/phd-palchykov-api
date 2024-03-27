@@ -33,7 +33,7 @@ class Api::V1::ResearchesController < ApplicationController
 
     head :no_content
   end
-  
+
   private
 
   def research_params

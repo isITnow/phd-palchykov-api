@@ -10,7 +10,7 @@ class Api::V1::NewsController < ApplicationController
     render json: @news, status: :ok
   end
 
-  def create  
+  def create
     @news = News.new news_params
 
     if @news.save
@@ -29,7 +29,7 @@ class Api::V1::NewsController < ApplicationController
 
     head :no_content
   end
-  
+
   private
 
   def news_params

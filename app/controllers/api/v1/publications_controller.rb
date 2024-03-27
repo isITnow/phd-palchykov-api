@@ -24,12 +24,12 @@ class Api::V1::PublicationsController < ApplicationController
   def update
     old_cover_blob = @publication.cover.blob if @publication.cover.attached? && publication_params[:cover]
     old_abstract_blob = @publication.abstract.blob if @publication.abstract.attached? && publication_params[:abstract]
-    
+
     if @publication.update publication_params
       render json: @publication, status: :accepted
     else
       render json: { error: @publication.errors.full_messages.to_sentence }, status: :unprocessable_entity
-      reattach_image @publication, :cover, old_cover_blob if old_cover_blob .present?
+      reattach_image @publication, :cover, old_cover_blob if old_cover_blob.present?
       reattach_image @publication, :abstract, old_abstract_blob if old_abstract_blob.present?
     end
   end
@@ -39,17 +39,18 @@ class Api::V1::PublicationsController < ApplicationController
 
     head :no_content
   end
-  
+
   private
 
   def publication_params
-    params.require(:publication).permit(:title, :year, :sequence_number, :source, :source_url, :cover, :abstract, authors: [])
+    params.require(:publication).permit(:title, :year, :sequence_number, :source, :source_url, :cover, :abstract,
+                                        authors: [])
   end
 
   def set_publication_period!
     @publication_period = PublicationPeriod.find params[:publication_period_id]
   end
-  
+
   def set_publication!
     @publication = @publication_period.publications.find params[:id]
   end

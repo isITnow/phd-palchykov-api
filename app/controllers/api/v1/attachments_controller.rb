@@ -1,6 +1,6 @@
 class Api::V1::AttachmentsController < ApplicationController
   before_action :authenticate_user!
-  
+
   include ErrorHandling
 
   def purge

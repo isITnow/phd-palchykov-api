@@ -11,7 +11,7 @@ class Api::V1::IllustrationsController < ApplicationController
     if @illustration.save
       render json: @illustration, status: :created
     else
-      render json: {error: @illustration.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { error: @illustration.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 

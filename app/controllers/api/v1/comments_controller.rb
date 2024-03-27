@@ -20,7 +20,7 @@ class Api::V1::CommentsController < ApplicationController
 
     head :no_content
   end
-  
+
   private
 
   def comment_params

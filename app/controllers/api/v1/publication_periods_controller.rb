@@ -25,7 +25,7 @@ class Api::V1::PublicationPeriodsController < ApplicationController
 
     head :no_content
   end
-  
+
   private
 
   def publication_period_params

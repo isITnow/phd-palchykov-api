@@ -11,9 +11,9 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def show
-    render json: @post, action_name: action_name, status: :ok
+    render json: @post, action_name:, status: :ok
   end
-  
+
   def create
     @post = current_user.posts.build post_params
 
@@ -26,7 +26,7 @@ class Api::V1::PostsController < ApplicationController
 
   def update
     if @post.update post_params
-      render json: @post, action_name: action_name, status: :accepted
+      render json: @post, action_name:, status: :accepted
     else
       render json: { error: @post.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class Api::V1::PostsController < ApplicationController
 
     head :no_content
   end
-  
+
   private
 
   def post_params

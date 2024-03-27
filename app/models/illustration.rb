@@ -3,9 +3,9 @@ class Illustration < ApplicationRecord
   include Validatable
 
   belongs_to :research
-  
+
   has_one_attached :schema
-  
+
   validates :description, :schema, presence: true
   validates :schema, presence: { message: 'must be attached' }, on: :create
 
@@ -13,4 +13,3 @@ class Illustration < ApplicationRecord
     validate_attached_image schema, 1
   end
 end
-

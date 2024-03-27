@@ -14,11 +14,11 @@ describe Post, type: :model do
     it { should validate_length_of(:body).is_at_most(700) }
   end
 
-  context "when creating an answer" do
+  context 'when creating an answer' do
     it 'valid with valid attributes' do
       expect(post).to be_valid
     end
-    
+
     it 'is not valid without body' do
       post.body = nil
       expect(post).to_not be_valid

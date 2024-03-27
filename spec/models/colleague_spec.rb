@@ -7,7 +7,7 @@ describe Colleague, type: :model do
     it { should have_one_attached(:photo) }
   end
 
-  describe "validation" do
+  describe 'validation' do
     subject { build(:colleague) }
     it { should validate_uniqueness_of(:name) }
     it { should validate_uniqueness_of(:email) }
@@ -17,11 +17,11 @@ describe Colleague, type: :model do
     it { should validate_length_of(:position).is_at_least(5) }
   end
 
-  context "when creating a colleague" do
+  context 'when creating a colleague' do
     it 'valid with valid attributes' do
       expect(colleague).to be_valid
     end
-    
+
     it 'is not valid without name' do
       colleague.name = nil
       expect(colleague).to_not be_valid
@@ -43,5 +43,3 @@ describe Colleague, type: :model do
     end
   end
 end
-
-

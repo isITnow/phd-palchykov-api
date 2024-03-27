@@ -4,7 +4,7 @@ describe News, type: :model do
   let(:news) { create(:news) }
 
   describe '#ensure_date_has_a_value' do
-    context "when date present" do
+    context 'when date present' do
       it 'does not set the date to default (current date)' do
         expect(news.date).to eq(news.date)
       end
@@ -32,11 +32,11 @@ describe News, type: :model do
     it { should validate_length_of(:title).is_at_most(150) }
   end
 
-  context "when creating a news" do
+  context 'when creating a news' do
     it 'valid with valid attributes' do
       expect(news).to be_valid
     end
-    
+
     it 'is not valid with a body length of less than 10' do
       news.body = '123456789'
       expect(news).to_not be_valid

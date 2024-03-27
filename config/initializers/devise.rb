@@ -313,13 +313,13 @@ Devise.setup do |config|
 
   # Secret key configuration
   config.jwt do |jwt|
-      jwt.secret = Rails.application.credentials.devise_jwt_secret_key
-      jwt.dispatch_requests = [
-        ['POST', %r{^/login$}]
-      ]
-      jwt.revocation_requests = [
-        ['DELETE', %r{^/logout$}]
-      ]
-      jwt.expiration_time = Rails.env.production? ? 120.minutes.to_i : nil
+    jwt.secret = Rails.application.credentials.devise_jwt_secret_key
+    jwt.dispatch_requests = [
+      ['POST', %r{^/login$}]
+    ]
+    jwt.revocation_requests = [
+      ['DELETE', %r{^/logout$}]
+    ]
+    jwt.expiration_time = Rails.env.production? ? 120.minutes.to_i : nil
   end
 end
