@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe 'Api::V1::PublicationPeriods', type: :request do
+describe 'Api::V1::PublicationPeriods' do
   let(:user) { create(:user) }
   let(:publication_period) { create(:publication_period) }
 
@@ -16,7 +18,7 @@ describe 'Api::V1::PublicationPeriods', type: :request do
       create_list(:publication_period, 5)
 
       get api_v1_publication_periods_path
-      expect(JSON.parse(response.body).length).to eq(5)
+      expect(response.parsed_body.length).to eq(5)
     end
   end
 

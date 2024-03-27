@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::NewsController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
   before_action :set_news!, except: %i[index create]
@@ -5,7 +7,7 @@ class Api::V1::NewsController < ApplicationController
   include ErrorHandling
 
   def index
-    @news = News.all.order(created_at: :desc)
+    @news = News.order(created_at: :desc)
 
     render json: @news, status: :ok
   end

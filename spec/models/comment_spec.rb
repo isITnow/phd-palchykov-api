@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe Comment, type: :model do
+describe Comment do
   let(:comment) { create(:comment) }
 
   describe 'associations' do

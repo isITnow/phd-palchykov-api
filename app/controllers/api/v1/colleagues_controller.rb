@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::ColleaguesController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
   before_action :set_colleague!, only: %i[destroy update]

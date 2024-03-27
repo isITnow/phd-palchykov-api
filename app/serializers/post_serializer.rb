@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PostSerializer < ActiveModel::Serializer
   attributes :id, :created_at, :updated_at, :body, :comments
 

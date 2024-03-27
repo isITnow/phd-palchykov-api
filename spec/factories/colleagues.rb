@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :colleague do
     sequence(:email) { Faker::Internet.email }

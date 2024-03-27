@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Publication < ApplicationRecord
   include AttachedImageValidation
   include Validatable

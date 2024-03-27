@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::PhotoAlbumsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_photo_album!, only: %i[show update destroy]
@@ -18,10 +20,8 @@ class Api::V1::PhotoAlbumsController < ApplicationController
     @photo_album = PhotoAlbum.new(photo_album_params.except(:pictures))
     pictures = params[:photo_album][:pictures]
 
-    if pictures
-      pictures.each do |picture|
-        @photo_album.pictures.attach(picture)
-      end
+    pictures&.each do |picture|
+      @photo_album.pictures.attach(picture)
     end
 
     if @photo_album.save

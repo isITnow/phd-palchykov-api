@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CommentSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
   attributes :id, :post_id, :author, :body, :created_at, :comment_image

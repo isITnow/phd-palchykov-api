@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::IllustrationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_research!

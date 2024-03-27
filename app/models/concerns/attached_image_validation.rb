@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AttachedImageValidation
   extend ActiveSupport::Concern
 
@@ -5,7 +7,7 @@ module AttachedImageValidation
     private
 
     def validate_attached_image(attachment, required_size)
-      return unless attachment.present?
+      return if attachment.blank?
 
       unless attachment.content_type.in?(%w[image/png image/jpg image/jpeg image/gif image/webp])
         errors.add(attachment.name, 'must be a PNG, JPG, JPEG, WEBP or GIF')

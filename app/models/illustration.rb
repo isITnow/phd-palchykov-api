@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Illustration < ApplicationRecord
   include AttachedImageValidation
   include Validatable

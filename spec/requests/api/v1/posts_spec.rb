@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe 'Api::V1::Posts', type: :request do
+describe 'Api::V1::Posts' do
   let(:user) { create(:user) }
 
   before { sign_in user }
@@ -15,7 +17,7 @@ describe 'Api::V1::Posts', type: :request do
       create_list(:post, 5)
 
       get api_v1_posts_path
-      expect(JSON.parse(response.body).length).to eq(5)
+      expect(response.parsed_body.length).to eq(5)
     end
   end
 
@@ -62,7 +64,7 @@ describe 'Api::V1::Posts', type: :request do
       it 'returns failure response and error message' do
         post api_v1_posts_path, params: invalid_params
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(JSON.parse(response.body)['error']).to include("Body can't be blank and Body is too short (minimum is 5 characters)")
+        expect(response.parsed_body['error']).to include("Body can't be blank and Body is too short (minimum is 5 characters)")
       end
 
       it 'does not create a new post' do
@@ -94,7 +96,7 @@ describe 'Api::V1::Posts', type: :request do
       it 'updates body' do
         new_body = Faker::Lorem.paragraph
         patch api_v1_post_path(post), params: { post: { body: new_body } }
-        expect(JSON.parse(response.body)['body']).to eq(new_body)
+        expect(response.parsed_body['body']).to eq(new_body)
       end
     end
 

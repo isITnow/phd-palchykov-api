@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe Colleague, type: :model do
+describe Colleague do
   let(:colleague) { build(:colleague) }
 
   describe 'associations' do

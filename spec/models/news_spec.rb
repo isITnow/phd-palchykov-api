@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe News, type: :model do
+describe News do
   let(:news) { create(:news) }
 
   describe '#ensure_date_has_a_value' do

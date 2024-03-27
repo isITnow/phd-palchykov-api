@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class AddUniquePositiveIntegerColumnToPublication < ActiveRecord::Migration[7.0]
   def change
     add_column :publications, :sequence_number, :integer, null: false
 
     # Add a check constraint to ensure the value is positive
-    execute <<-SQL
+    execute <<-SQL.squish
       ALTER TABLE publications
       ADD CONSTRAINT check_positive_sequence_number
       CHECK (sequence_number > 0);

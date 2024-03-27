@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::ResearchesController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
   before_action :set_research!, only: %i[destroy update]

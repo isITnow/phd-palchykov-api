@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IllustrationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
   attributes :id, :sequence_number, :description, :schema_url, :created_at

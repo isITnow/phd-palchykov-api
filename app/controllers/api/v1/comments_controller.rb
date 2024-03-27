@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::CommentsController < ApplicationController
   before_action :authenticate_user!, only: %i[destroy]
   before_action :set_post!

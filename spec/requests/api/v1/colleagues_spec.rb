@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe 'Api::V1::Colleagues', type: :request do
+describe 'Api::V1::Colleagues' do
   let(:user) { create(:user) }
   let(:colleague) { create(:colleague) }
 
@@ -16,7 +18,7 @@ describe 'Api::V1::Colleagues', type: :request do
       create_list(:colleague, 5)
 
       get api_v1_colleagues_path
-      expect(JSON.parse(response.body).length).to eq(5)
+      expect(response.parsed_body.length).to eq(5)
     end
   end
 
@@ -70,10 +72,10 @@ describe 'Api::V1::Colleagues', type: :request do
         post '/api/v1/colleagues', params: invalid_params
         expect(response).to have_http_status(:unprocessable_entity)
 
-        expect(JSON.parse(response.body)['error']).to include("Name can't be blank",
-                                                              'Position is too short (minimum is 5 characters)',
-                                                              'Photo must be attached',
-                                                              'Name is too short (minimum is 5 characters)')
+        expect(response.parsed_body['error']).to include("Name can't be blank",
+                                                         'Position is too short (minimum is 5 characters)',
+                                                         'Photo must be attached',
+                                                         'Name is too short (minimum is 5 characters)')
       end
 
       it 'does not create a new colleague' do
@@ -102,8 +104,8 @@ describe 'Api::V1::Colleagues', type: :request do
 
       it 'updates attributes' do
         patch api_v1_colleague_path(colleague), params: { colleague: { name: 'New Name', email: 'name@mail.com' } }
-        expect(JSON.parse(response.body)['name']).to eq('New Name')
-        expect(JSON.parse(response.body)['email']).to eq('name@mail.com')
+        expect(response.parsed_body['name']).to eq('New Name')
+        expect(response.parsed_body['email']).to eq('name@mail.com')
       end
     end
 
