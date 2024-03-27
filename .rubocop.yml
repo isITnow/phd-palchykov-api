@@ -13,3 +13,6 @@ Style/Documentation:
 
 Style/ClassAndModuleChildren:
   EnforcedStyle: compact
+
+Rails/I18nLocaleTexts:
+  Enabled: false
