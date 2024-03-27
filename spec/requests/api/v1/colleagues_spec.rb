@@ -110,7 +110,7 @@ describe 'Api::V1::Colleagues' do
     end
 
     context 'with invalid params' do
-      context 'required attribute is nil' do
+      context 'when required attribute is nil' do
         it 'returns failure response' do
           patch api_v1_colleague_path(colleague), params: { colleague: { name: nil } }
           expect(response).to have_http_status(:unprocessable_entity)
@@ -118,8 +118,8 @@ describe 'Api::V1::Colleagues' do
 
         it 'does not update the colleague' do
           patch api_v1_colleague_path(colleague), params: { colleague: { name: nil } }
-          @colleague = Colleague.find colleague.id
-          expect(@colleague.name).to eq(colleague.name)
+          test_colleague = Colleague.find colleague.id
+          expect(test_colleague.name).to eq(colleague.name)
         end
       end
     end
@@ -135,7 +135,7 @@ describe 'Api::V1::Colleagues' do
       end
     end
 
-    context 'colleague exists' do
+    context 'when colleague exists' do
       it 'returns a successful response' do
         delete api_v1_colleague_path(colleague)
         expect(response).to have_http_status(:no_content)
@@ -143,15 +143,15 @@ describe 'Api::V1::Colleagues' do
 
       it 'deletes a Colleague' do
         create_list(:colleague, 5)
-        @colleague = Colleague.last
+        colleague = Colleague.last
 
         expect do
-          delete api_v1_colleague_path(@colleague)
+          delete api_v1_colleague_path(colleague)
         end.to change(Colleague, :count).by(-1)
       end
     end
 
-    context 'colleague does not exist' do
+    context 'when colleague does not exist' do
       it 'returns not_found response' do
         delete api_v1_colleague_path(id: -1)
         expect(response).to have_http_status(:not_found)

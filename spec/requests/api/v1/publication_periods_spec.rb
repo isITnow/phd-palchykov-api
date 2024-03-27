@@ -45,8 +45,8 @@ describe 'Api::V1::PublicationPeriods' do
         expect do
           post api_v1_publication_periods_path(params:)
         end.to change(PublicationPeriod, :count).by(1)
-        @publication_period = PublicationPeriod.last
-        expect(@publication_period.title).to eq('2020-2023')
+        publication_period = PublicationPeriod.last
+        expect(publication_period.title).to eq('2020-2023')
       end
     end
 
@@ -78,7 +78,7 @@ describe 'Api::V1::PublicationPeriods' do
       end
     end
 
-    context 'publication period exists' do
+    context 'when publication period exists' do
       it 'returns a successful response' do
         delete api_v1_publication_period_path(publication_period)
         expect(response).to have_http_status(:no_content)
@@ -86,15 +86,15 @@ describe 'Api::V1::PublicationPeriods' do
 
       it 'deletes a PublicationPeriod' do
         create_list(:publication_period, 3)
-        @publication_period = PublicationPeriod.last
+        publication_period = PublicationPeriod.last
 
         expect do
-          delete api_v1_publication_period_path(@publication_period)
+          delete api_v1_publication_period_path(publication_period)
         end.to change(PublicationPeriod, :count).by(-1)
       end
     end
 
-    context 'publication period does not exist' do
+    context 'when publication period does not exist' do
       it 'returns not_found response' do
         delete api_v1_publication_period_path(id: -1)
         expect(response).to have_http_status(:not_found)

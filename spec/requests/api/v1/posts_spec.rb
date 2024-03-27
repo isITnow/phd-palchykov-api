@@ -64,7 +64,8 @@ describe 'Api::V1::Posts' do
       it 'returns failure response and error message' do
         post api_v1_posts_path, params: invalid_params
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body['error']).to include("Body can't be blank and Body is too short (minimum is 5 characters)")
+        error_message = "Body can't be blank and Body is too short (minimum is 5 characters)"
+        expect(response.parsed_body['error']).to include(error_message)
       end
 
       it 'does not create a new post' do
@@ -108,8 +109,8 @@ describe 'Api::V1::Posts' do
 
       it 'does not update the post' do
         patch api_v1_post_path(post), params: { post: { body: '' } }
-        @post = Post.find post.id
-        expect(@post.body).to eq(post.body)
+        test_post = Post.find post.id
+        expect(test_post.body).to eq(post.body)
       end
     end
   end
@@ -126,7 +127,7 @@ describe 'Api::V1::Posts' do
       end
     end
 
-    context 'post exists' do
+    context 'when post exists' do
       it 'returns a successful response' do
         delete api_v1_post_path(post)
         expect(response).to have_http_status(:no_content)
@@ -134,15 +135,15 @@ describe 'Api::V1::Posts' do
 
       it 'deletes a post' do
         create_list(:post, 5)
-        @post = Post.last
+        post = Post.last
 
         expect do
-          delete api_v1_post_path(@post)
+          delete api_v1_post_path(post)
         end.to change(Post, :count).by(-1)
       end
     end
 
-    context 'post does not exist' do
+    context 'when post does not exist' do
       it 'returns not_found response' do
         delete api_v1_post_path(id: -1)
         expect(response).to have_http_status(:not_found)
