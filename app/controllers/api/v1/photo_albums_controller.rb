@@ -38,18 +38,9 @@ class Api::V1::PhotoAlbumsController < ApplicationController
     end
 
     @photo_album.assign_attributes(photo_album_params.reject { |k| k['pictures'] })
+
     if @photo_album.valid?
-      if photo_album_params[:pictures].present?
-        photo_album_params[:pictures].each do |picture|
-          @photo_album.pictures.attach(picture)
-        end
-      end
-      if @photo_album.save
-        render json: @photo_album, status: :accepted
-      else
-        # Use general method to render response json and reattach cover_image
-        error_response_with_image_reattach @photo_album, :cover_image, old_cover_image_blob
-      end
+      update_photo_album @photo_album
     else
       # Use general method to render response json and reattach cover_image
       error_response_with_image_reattach @photo_album, :cover_image, old_cover_image_blob
@@ -70,5 +61,19 @@ class Api::V1::PhotoAlbumsController < ApplicationController
 
   def set_photo_album!
     @photo_album = PhotoAlbum.find params[:id]
+  end
+
+  def update_photo_album(photo_album)
+    if photo_album_params[:pictures].present?
+      photo_album_params[:pictures].each do |picture|
+        photo_album.pictures.attach(picture)
+      end
+    end
+    if photo_album.save
+      render json: photo_album, status: :accepted
+    else
+      # Use general method to render response json and reattach cover_image
+      error_response_with_image_reattach photo_album, :cover_image, old_cover_image_blob
+    end
   end
 end
