@@ -26,10 +26,10 @@ describe News, type: :model do
   end
 
   describe 'validations' do
-    it { should validate_length_of(:body).is_at_least(10) }
-    it { should validate_presence_of(:title) }
-    it { should validate_length_of(:title).is_at_least(5) }
-    it { should validate_length_of(:title).is_at_most(150) }
+    it { is_expected.to validate_length_of(:body).is_at_least(10) }
+    it { is_expected.to validate_presence_of(:title) }
+    it { is_expected.to validate_length_of(:title).is_at_least(5) }
+    it { is_expected.to validate_length_of(:title).is_at_most(150) }
   end
 
   context 'when creating a news' do
@@ -39,22 +39,22 @@ describe News, type: :model do
 
     it 'is not valid with a body length of less than 10' do
       news.body = '123456789'
-      expect(news).to_not be_valid
+      expect(news).not_to be_valid
     end
 
     it 'is not valid without title' do
       news.title = nil
-      expect(news).to_not be_valid
+      expect(news).not_to be_valid
     end
 
     it 'is not valid with a title length of less than 5' do
       news.title = '1234'
-      expect(news).to_not be_valid
+      expect(news).not_to be_valid
     end
 
     it 'is not valid with a title length of more than 150' do
       news.title = Faker::Lorem.characters(number: 151)
-      expect(news).to_not be_valid
+      expect(news).not_to be_valid
     end
   end
 end

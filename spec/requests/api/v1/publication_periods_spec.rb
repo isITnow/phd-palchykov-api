@@ -2,8 +2,9 @@ require 'rails_helper'
 
 describe 'Api::V1::PublicationPeriods', type: :request do
   let(:user) { create(:user) }
-  before { sign_in user }
   let(:publication_period) { create(:publication_period) }
+
+  before { sign_in user }
 
   describe 'GET /api/v1/publication_periods' do
     it 'returns a successful response' do
@@ -60,7 +61,7 @@ describe 'Api::V1::PublicationPeriods', type: :request do
       it 'does not create a new PublicationPeriod' do
         expect do
           post api_v1_publication_periods_path params: invalid_params
-        end.to change(PublicationPeriod, :count).by(0)
+        end.not_to change(PublicationPeriod, :count)
       end
     end
   end

@@ -2,8 +2,9 @@ require 'rails_helper'
 
 describe 'Api::V1::Colleagues', type: :request do
   let(:user) { create(:user) }
-  before { sign_in user }
   let(:colleague) { create(:colleague) }
+
+  before { sign_in user }
 
   describe 'GET /api/v1/colleagues' do
     it 'returns a successful response' do

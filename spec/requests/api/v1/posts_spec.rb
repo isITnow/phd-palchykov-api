@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe 'Api::V1::Posts', type: :request do
   let(:user) { create(:user) }
+
   before { sign_in user }
 
   describe 'GET /api/v1/posts' do
