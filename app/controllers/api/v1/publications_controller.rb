@@ -31,8 +31,7 @@ class Api::V1::PublicationsController < ApplicationController
       render json: @publication, status: :accepted
     else
       render json: { error: @publication.errors.full_messages.to_sentence }, status: :unprocessable_entity
-      reattach_image @publication, :cover, old_cover_blob if old_cover_blob.present?
-      reattach_image @publication, :abstract, old_abstract_blob if old_abstract_blob.present?
+      reattach_cover_and_abstract @publication, old_cover_blob, old_abstract_blob
     end
   end
 
@@ -55,5 +54,10 @@ class Api::V1::PublicationsController < ApplicationController
 
   def set_publication!
     @publication = @publication_period.publications.find params[:id]
+  end
+
+  def reattach_cover_and_abstract(publication, old_cover_blob, old_abstract_blob)
+    reattach_image publication, :cover, old_cover_blob if old_cover_blob.present?
+    reattach_image publication, :abstract, old_abstract_blob if old_abstract_blob.present?
   end
 end
