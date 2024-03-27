@@ -14,17 +14,19 @@ class PhotoAlbumSerializer < ActiveModel::Serializer
   def pictures_list
     return unless object.pictures && show_action?
 
-    object.pictures.map do |picture|
-      {
-        id: picture.id,
-        filename: picture.filename,
-        picture_url: url_for(picture),
-        metadata: {
-          width: picture.metadata[:width],
-          height: picture.metadata[:height]
-        }
+    object.pictures.map { |picture| picture_data(picture) }
+  end
+
+  def picture_data(picture)
+    {
+      id: picture.id,
+      filename: picture.filename,
+      picture_url: url_for(picture),
+      metadata: {
+        width: picture.metadata[:width],
+        height: picture.metadata[:height]
       }
-    end
+    }
   end
 
   def show_action?
