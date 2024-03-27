@@ -45,6 +45,10 @@ describe 'Api::V1::PublicationPeriods' do
         expect do
           post api_v1_publication_periods_path(params:)
         end.to change(PublicationPeriod, :count).by(1)
+      end
+
+      it 'creates the PublicationPeriod with proper title' do
+        post api_v1_publication_periods_path(params:)
         publication_period = PublicationPeriod.last
         expect(publication_period.title).to eq('2020-2023')
       end

@@ -61,9 +61,13 @@ describe 'Api::V1::Posts' do
     end
 
     context 'with invalid params' do
-      it 'returns failure response and error message' do
+      it 'returns failure response' do
         post api_v1_posts_path, params: invalid_params
         expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'returns error message' do
+        post api_v1_posts_path, params: invalid_params
         error_message = "Body can't be blank and Body is too short (minimum is 5 characters)"
         expect(response.parsed_body['error']).to include(error_message)
       end

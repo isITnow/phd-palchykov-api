@@ -68,10 +68,13 @@ describe 'Api::V1::Colleagues' do
     end
 
     context 'with invalid params' do
-      it 'returns failure response and error message' do
+      it 'returns failure response' do
         post '/api/v1/colleagues', params: invalid_params
         expect(response).to have_http_status(:unprocessable_entity)
+      end
 
+      it 'returns error message' do
+        post '/api/v1/colleagues', params: invalid_params
         expect(response.parsed_body['error']).to include("Name can't be blank",
                                                          'Position is too short (minimum is 5 characters)',
                                                          'Photo must be attached',
@@ -102,9 +105,13 @@ describe 'Api::V1::Colleagues' do
         expect(response).to have_http_status(:accepted)
       end
 
-      it 'updates attributes' do
-        patch api_v1_colleague_path(colleague), params: { colleague: { name: 'New Name', email: 'name@mail.com' } }
+      it 'updates name' do
+        patch api_v1_colleague_path(colleague), params: { colleague: { name: 'New Name' } }
         expect(response.parsed_body['name']).to eq('New Name')
+      end
+
+      it 'updates email' do
+        patch api_v1_colleague_path(colleague), params: { colleague: { email: 'name@mail.com' } }
         expect(response.parsed_body['email']).to eq('name@mail.com')
       end
     end
