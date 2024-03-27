@@ -23,7 +23,7 @@ class Api::V1::PublicationsController < ApplicationController
     end
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     old_cover_blob = @publication.cover.blob if @publication.cover.attached? && publication_params[:cover]
     old_abstract_blob = @publication.abstract.blob if @publication.abstract.attached? && publication_params[:abstract]
 
