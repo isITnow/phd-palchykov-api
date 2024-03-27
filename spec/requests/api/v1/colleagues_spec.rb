@@ -72,7 +72,7 @@ describe 'Api::V1::Colleagues', type: :request do
 
         expect(JSON.parse(response.body)['error']).to include("Name can't be blank",
                                                               'Position is too short (minimum is 5 characters)',
-                                                              "Photo can't be blank",
+                                                              'Photo must be attached',
                                                               'Name is too short (minimum is 5 characters)')
       end
 
