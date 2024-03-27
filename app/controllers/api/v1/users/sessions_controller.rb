@@ -9,28 +9,40 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
 
   def respond_with(current_user, _opts = {})
     render json: {
-      status: { code: 200, message: 'Logged in sucessfully.' },
+      status: { code: 200, message: 'Logged in successfully.' },
       data: UserSerializer.new(current_user)
     }, status: :ok
   end
 
   def respond_to_on_destroy
-    if request.headers['Authorization'].present?
-      jwt_payload = JWT.decode(request.headers['Authorization'].split.last,
-                               Rails.application.credentials.devise_jwt_secret_key!).first
-      current_user = User.find(jwt_payload['sub'])
-    end
+    current_user = find_current_user_from_token
 
     if current_user
-      render json: {
-        status: 200,
-        message: 'logged out successfully'
-      }, status: :ok
+      render_logged_out_successfully
     else
-      render json: {
-        status: 401,
-        message: "Couldn't find an active session."
-      }, status: :unauthorized
+      render_session_not_found
     end
+  end
+
+  def find_current_user_from_token
+    return if request.headers['Authorization'].blank?
+
+    jwt_payload = JWT.decode(request.headers['Authorization'].split.last,
+                             Rails.application.credentials.devise_jwt_secret_key!).first
+    User.find_by(id: jwt_payload['sub'])
+  end
+
+  def render_logged_out_successfully
+    render json: {
+      status: 200,
+      message: 'Logged out successfully'
+    }, status: :ok
+  end
+
+  def render_session_not_found
+    render json: {
+      status: 401,
+      message: "Couldn't find an active session."
+    }, status: :unauthorized
   end
 end
