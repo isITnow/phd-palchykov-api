@@ -2,11 +2,12 @@
 
 class NewsSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :title, :body, :image_url, :links, :date, :created_at
+  include AttachmentData
+  attributes :id, :title, :body, :links, :date, :created_at, :image_data, :image_data
 
-  def image_url
+  def image_data
     return unless object.image.attached?
 
-    url_for(object.image)
+    attachment_data object, :image # Using the method from AttachmentData concern
   end
 end

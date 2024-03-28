@@ -2,11 +2,12 @@
 
 class ColleagueSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :name, :position, :phone, :email, :photo_url, :created_at
+  include AttachmentData
+  attributes :id, :name, :position, :phone, :email, :created_at, :photo_data
 
-  def photo_url
+  def photo_data
     return unless object.photo.attached?
 
-    url_for(object.photo)
+    attachment_data object, :photo # Using the method from AttachmentData concern
   end
 end

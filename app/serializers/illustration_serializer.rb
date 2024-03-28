@@ -2,7 +2,8 @@
 
 class IllustrationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :sequence_number, :description, :schema_url, :created_at
+  include AttachmentData
+  attributes :id, :sequence_number, :description, :schema_data, :created_at
 
   belongs_to :research
 
@@ -10,5 +11,11 @@ class IllustrationSerializer < ActiveModel::Serializer
     return unless object.schema.attached?
 
     url_for(object.schema)
+  end
+
+  def schema_data
+    return unless object.schema.attached?
+
+    attachment_data object, :schema # Using the method from AttachmentData concern
   end
 end
