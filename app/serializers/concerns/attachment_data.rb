@@ -8,9 +8,9 @@ module AttachmentData
 
     def attachment_data(object, attachment)
       {
-        image_id: object.send(attachment).id,
+        "#{attachment}_id": object.send(attachment).id,
         filename: object.send(attachment).filename,
-        image_url: url_for(object.image),
+        "#{attachment}_url": url_for(object.send(attachment)),
         metadata: {
           width: object.send(attachment).metadata[:width],
           height: object.send(attachment).metadata[:height]
