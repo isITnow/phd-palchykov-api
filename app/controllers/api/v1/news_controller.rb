@@ -7,7 +7,7 @@ class Api::V1::NewsController < ApplicationController
   include ErrorHandling
 
   def index
-    @news = News.order(created_at: :desc)
+    @news = News.ordered_by_date
 
     render json: @news, status: :ok
   end

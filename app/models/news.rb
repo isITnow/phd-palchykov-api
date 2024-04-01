@@ -15,6 +15,8 @@ class News < ApplicationRecord
     validate_attached_image image, 1
   end
 
+  scope :ordered_by_date, -> { all.sort_by { |news| Date.strptime(news.date, '%B %d, %Y') }.reverse }
+
   private
 
   def ensure_date_has_a_value
