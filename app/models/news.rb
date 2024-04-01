@@ -3,7 +3,7 @@
 class News < ApplicationRecord
   include AttachedImageValidation
 
-  before_validation :ensure_date_has_a_value
+  before_validation :ensure_date_has_a_value, :convert_blank_body_to_nil
 
   has_one_attached :image
 
@@ -21,5 +21,9 @@ class News < ApplicationRecord
     return unless date.nil? || date.blank?
 
     self.date = Time.zone.now.strftime('%B %e, %Y')
+  end
+
+  def convert_blank_body_to_nil
+    self.body = nil if body.blank?
   end
 end
