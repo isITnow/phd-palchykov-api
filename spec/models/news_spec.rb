@@ -28,6 +28,15 @@ describe News do
     end
   end
 
+  describe '#convert_blank_body_to_nil' do
+    context 'when save news with blank body' do
+      it 'converts body to nil' do
+        news = create(:news, body: '')
+        expect(news.body).to be_nil
+      end
+    end
+  end
+
   describe 'validations' do
     it { is_expected.to validate_length_of(:body).is_at_least(10) }
     it { is_expected.to validate_presence_of(:title) }
