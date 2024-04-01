@@ -6,12 +6,6 @@ class PublicationSerializer < ActiveModel::Serializer
   attributes :id, :publication_period_id, :year, :sequence_number, :title, :source, :source_url, :authors, :cover_data,
              :abstract_data, :created_at
 
-  # def cover_url
-  #   return unless object.cover.attached?
-
-  #   url_for(object.cover)
-  # end
-
   def cover_data
     return unless object.cover.attached?
 
@@ -23,10 +17,4 @@ class PublicationSerializer < ActiveModel::Serializer
 
     attachment_data object, :abstract
   end
-
-  # def abstract_url
-  #   return unless object.abstract.attached?
-
-  #   url_for(object.abstract)
-  # end
 end
