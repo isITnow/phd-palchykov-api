@@ -11,10 +11,10 @@ module ErrorHandling
   private
 
   def notfound
-    render json: { error: 'Record not found' }, status: :not_found
+    render json: { message: 'Record not found' }, status: :not_found
   end
 
   def token_expired
-    render json: { error: 'Signature has expired' }, status: :unauthorized
+    render json: { message: 'Signature has expired' }, status: :unauthorized
   end
 end

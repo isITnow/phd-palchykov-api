@@ -7,18 +7,18 @@ class Api::V1::PublicationPeriodsController < ApplicationController
   include ErrorHandling
 
   def index
-    @publication_periods = PublicationPeriod.all
+    publication_periods = PublicationPeriod.all
 
-    render json: @publication_periods, status: :ok
+    render json: publication_periods, status: :ok
   end
 
   def create
-    @publication_period = PublicationPeriod.new publication_period_params
+    publication_period = PublicationPeriod.new publication_period_params
 
-    if @publication_period.save
-      render json: @publication_period, status: :created
+    if publication_period.save
+      render json: publication_period, status: :created
     else
-      render json: { error: @publication_period.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: publication_period.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -31,7 +31,7 @@ class Api::V1::PublicationPeriodsController < ApplicationController
   private
 
   def publication_period_params
-    params.require(:publication_period).permit(:title)
+    params.permit(:title)
   end
 
   def set_publication_period!

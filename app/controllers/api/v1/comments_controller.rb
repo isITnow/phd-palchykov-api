@@ -8,12 +8,12 @@ class Api::V1::CommentsController < ApplicationController
   include ErrorHandling
 
   def create
-    @comment = @post.comments.build comment_params
+    comment = @post.comments.build comment_params
 
-    if @comment.save
-      render json: @comment, status: :created
+    if comment.save
+      render json: comment, status: :created
     else
-      render json: { error: @comment.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: comment.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -26,7 +26,7 @@ class Api::V1::CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:author, :body, :comment_image)
+    params.permit(:author, :body, :comment_image)
   end
 
   def set_post!

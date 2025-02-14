@@ -1,24 +1,28 @@
 # frozen_string_literal: true
 
 class Api::V1::ColleaguesController < ApplicationController
-  before_action :authenticate_user!, except: %i[index]
-  before_action :set_colleague!, only: %i[destroy update]
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :set_colleague!, except: %i[index create]
 
   include ErrorHandling
 
   def index
-    @colleagues = Colleague.order(id: :asc)
+    colleagues = Colleague.order(id: :asc)
 
-    render json: @colleagues, status: :ok
+    render json: colleagues, status: :ok
+  end
+
+  def show
+    render json: @colleague, status: :ok
   end
 
   def create
-    @colleague = Colleague.new colleague_params
+    colleague = Colleague.new colleague_params
 
-    if @colleague.save
-      render json: @colleague, status: :created
+    if colleague.save
+      render json: colleague, status: :created
     else
-      render json: { error: @colleague.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: colleague.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -35,7 +39,7 @@ class Api::V1::ColleaguesController < ApplicationController
   private
 
   def colleague_params
-    params.require(:colleague).permit(:name, :position, :email, :phone, :photo)
+    params.permit(:name, :position, :email, :phone, :photo)
   end
 
   def set_colleague!

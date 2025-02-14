@@ -24,7 +24,7 @@ class ApplicationController < ActionController::API
   end
 
   def error_response_with_image_reattach(item, attachment, image_blob)
-    render json: { error: item.errors.full_messages.to_sentence }, status: :unprocessable_entity
+    render json: { message: item.errors.full_messages.to_sentence }, status: :unprocessable_entity
     # Reattach the image if it was an image update attempt
     reattach_image item, attachment, image_blob if image_blob.present?
   end

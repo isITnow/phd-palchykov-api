@@ -1,24 +1,28 @@
 # frozen_string_literal: true
 
 class Api::V1::ResearchesController < ApplicationController
-  before_action :authenticate_user!, except: %i[index]
-  before_action :set_research!, only: %i[destroy update]
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :set_research!, except: %i[index create]
 
   include ErrorHandling
 
   def index
-    @researches = Research.includes(:illustrations).order(created_at: :desc)
+    researches = Research.includes(:illustrations).order(created_at: :desc)
 
-    render json: @researches, status: :ok
+    render json: researches, status: :ok
+  end
+
+  def show
+    render json: @research, status: :ok
   end
 
   def create
-    @research = Research.new research_params
+    research = Research.new research_params
 
-    if @research.save
-      render json: @research, status: :created
+    if research.save
+      render json: research, status: :created
     else
-      render json: { error: @research.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: research.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -26,7 +30,7 @@ class Api::V1::ResearchesController < ApplicationController
     if @research.update research_params
       render json: @research, status: :accepted
     else
-      render json: { error: @research.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: @research.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -39,7 +43,7 @@ class Api::V1::ResearchesController < ApplicationController
   private
 
   def research_params
-    params.require(:research).permit(:payload)
+    params.permit(:payload)
   end
 
   def set_research!

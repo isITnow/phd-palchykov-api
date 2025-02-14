@@ -1,25 +1,29 @@
 # frozen_string_literal: true
 
 class Api::V1::PublicationsController < ApplicationController
-  before_action :authenticate_user!, except: %i[index]
+  before_action :authenticate_user!, except: %i[index show]
   before_action :set_publication_period!
-  before_action :set_publication!, only: %i[update destroy]
+  before_action :set_publication!, except: %i[index create]
 
   include ErrorHandling
 
   def index
-    @publications = @publication_period.publications.order(sequence_number: :desc)
+    publications = @publication_period.publications.order(sequence_number: :desc)
 
-    render json: @publications, status: :ok
+    render json: publications, status: :ok
+  end
+
+  def show
+    render json: @publication, status: :ok
   end
 
   def create
-    @publication = @publication_period.publications.build publication_params
+    publication = @publication_period.publications.build publication_params
 
-    if @publication.save
-      render json: @publication, status: :created
+    if publication.save
+      render json: publication, status: :created
     else
-      render json: { error: @publication.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: publication.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +34,7 @@ class Api::V1::PublicationsController < ApplicationController
     if @publication.update publication_params
       render json: @publication, status: :accepted
     else
-      render json: { error: @publication.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: @publication.errors.full_messages.to_sentence }, status: :unprocessable_entity
       reattach_cover_and_abstract old_cover_blob, old_abstract_blob
     end
   end
@@ -44,8 +48,7 @@ class Api::V1::PublicationsController < ApplicationController
   private
 
   def publication_params
-    params.require(:publication).permit(:title, :year, :sequence_number, :source, :source_url, :cover, :abstract,
-                                        authors: [])
+    params.permit(:title, :year, :sequence_number, :source, :source_url, :cover, :abstract, authors: [])
   end
 
   def set_publication_period!

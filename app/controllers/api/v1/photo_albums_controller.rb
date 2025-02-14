@@ -7,9 +7,9 @@ class Api::V1::PhotoAlbumsController < ApplicationController
   include ErrorHandling
 
   def index
-    @photo_albums = PhotoAlbum.order(updated_at: :desc)
+    photo_albums = PhotoAlbum.order(updated_at: :desc)
 
-    render json: @photo_albums, action_name:, status: :ok
+    render json: photo_albums, action_name:, status: :ok
   end
 
   def show
@@ -17,17 +17,17 @@ class Api::V1::PhotoAlbumsController < ApplicationController
   end
 
   def create
-    @photo_album = PhotoAlbum.new(photo_album_params.except(:pictures))
-    pictures = params[:photo_album][:pictures]
+    photo_album = PhotoAlbum.new(photo_album_params.except(:pictures))
+    pictures = params[:pictures]
 
     pictures&.each do |picture|
-      @photo_album.pictures.attach(picture)
+      photo_album.pictures.attach(picture)
     end
 
-    if @photo_album.save
-      render json: @photo_album, status: :created
+    if photo_album.save
+      render json: photo_album, status: :created
     else
-      render json: { error: @photo_album.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: photo_album.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -56,7 +56,7 @@ class Api::V1::PhotoAlbumsController < ApplicationController
   private
 
   def photo_album_params
-    params.require(:photo_album).permit(:title, :cover_image, pictures: [])
+    params.permit(:title, :cover_image, pictures: [])
   end
 
   def set_photo_album!

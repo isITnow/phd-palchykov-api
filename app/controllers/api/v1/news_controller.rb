@@ -1,24 +1,28 @@
 # frozen_string_literal: true
 
 class Api::V1::NewsController < ApplicationController
-  before_action :authenticate_user!, except: %i[index]
+  before_action :authenticate_user!, except: %i[index show]
   before_action :set_news!, except: %i[index create]
 
   include ErrorHandling
 
   def index
-    @news = News.ordered_by_date
+    all_news = News.ordered_by_date
 
+    render json: all_news, status: :ok
+  end
+
+  def show
     render json: @news, status: :ok
   end
 
   def create
-    @news = News.new news_params
+    news = News.new news_params
 
-    if @news.save
-      render json: @news, status: :created
+    if news.save
+      render json: news, status: :created
     else
-      render json: { error: @news.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: news.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -35,7 +39,7 @@ class Api::V1::NewsController < ApplicationController
   private
 
   def news_params
-    params.require(:news).permit(:title, :body, :date, :image, links: [])
+    params.permit(:title, :body, :date, :image, links: [])
   end
 
   def set_news!

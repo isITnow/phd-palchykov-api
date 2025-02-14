@@ -3,17 +3,21 @@
 class Api::V1::IllustrationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_research!
-  before_action :set_illustration!, only: %i[update destroy]
+  before_action :set_illustration!, except: %i[create]
 
   include ErrorHandling
 
-  def create
-    @illustration = @research.illustrations.build illustration_params
+  def show
+    render json: @illustration, status: :ok
+  end
 
-    if @illustration.save
-      render json: @illustration, status: :created
+  def create
+    illustration = @research.illustrations.build illustration_params
+
+    if illustration.save
+      render json: illustration, status: :created
     else
-      render json: { error: @illustration.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: illustration.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +34,8 @@ class Api::V1::IllustrationsController < ApplicationController
   private
 
   def illustration_params
-    params.require(:illustration).permit(:description, :schema, :sequence_number)
+    # TODO: fix ERROR: `Unpermitted parameter: :research_id`
+    params.permit(:description, :schema, :sequence_number)
   end
 
   def set_research!

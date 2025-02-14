@@ -19,8 +19,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   namespace :api do
     namespace :v1 do
-      resources :colleagues, except: %i[new edit show]
-      resources :news, except: %i[new edit show]
+      resources :colleagues, except: %i[new edit]
+      resources :news, except: %i[new edit]
       resources :photo_albums, except: %i[new edit]
 
       resources :posts, except: %i[new edit] do
@@ -28,10 +28,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       end
 
       resources :publication_periods, only: %i[index create destroy] do
-        resources :publications, except: %i[new edit show]
+        resources :publications, except: %i[new edit]
       end
 
-      resources :researches, except: %i[new edit show] do
+      resources :researches, except: %i[new edit] do
         resources :illustrations, only: %i[create update delete]
       end
 

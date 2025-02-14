@@ -7,9 +7,9 @@ class Api::V1::PostsController < ApplicationController
   include ErrorHandling
 
   def index
-    @posts = Post.order(updated_at: :desc)
+    posts = Post.order(updated_at: :desc)
 
-    render json: @posts, status: :ok
+    render json: posts, status: :ok
   end
 
   def show
@@ -17,12 +17,12 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.build post_params
+    post = current_user.posts.build post_params
 
-    if @post.save
-      render json: @post, status: :created
+    if post.save
+      render json: post, status: :created
     else
-      render json: { error: @post.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: post.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +30,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.update post_params
       render json: @post, action_name:, status: :accepted
     else
-      render json: { error: @post.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: @post.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -43,7 +43,7 @@ class Api::V1::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:body)
+    params.permit(:body)
   end
 
   def set_post!
