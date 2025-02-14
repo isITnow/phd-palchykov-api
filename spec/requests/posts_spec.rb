@@ -9,72 +9,64 @@ describe 'Posts' do
 
   describe 'GET /posts' do
     it 'returns a successful response' do
-      get api_v1_posts_path
+      get posts_path
       expect(response).to have_http_status(:ok)
     end
 
     it 'returns posts' do
       create_list(:post, 5)
 
-      get api_v1_posts_path
+      get posts_path
       expect(response.parsed_body.length).to eq(5)
     end
   end
 
   describe 'POST /posts' do
     let(:valid_params) do
-      {
-        post: {
-          body: Faker::Lorem.paragraph
-        }
-      }
+      { body: Faker::Lorem.paragraph }
     end
 
     let(:invalid_params) do
-      {
-        post: {
-          body: nil
-        }
-      }
+      { body: nil }
     end
 
     context 'with no user signed in' do
       it 'returns an unauthorized response' do
         sign_out user
 
-        post api_v1_posts_path params: valid_params
+        post posts_path params: valid_params
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
     context 'with valid params' do
       it 'returns a successful response' do
-        post api_v1_posts_path, params: valid_params
+        post posts_path, params: valid_params
         expect(response).to have_http_status(:created)
       end
 
       it 'creates a new post' do
         expect do
-          post api_v1_posts_path, params: valid_params
+          post posts_path, params: valid_params
         end.to change(Post, :count).by(1)
       end
     end
 
     context 'with invalid params' do
       it 'returns failure response' do
-        post api_v1_posts_path, params: invalid_params
+        post posts_path, params: invalid_params
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'returns error message' do
-        post api_v1_posts_path, params: invalid_params
+        post posts_path, params: invalid_params
         error_message = "Body can't be blank and Body is too short (minimum is 5 characters)"
-        expect(response.parsed_body['error']).to include(error_message)
+        expect(response.parsed_body['message']).to include(error_message)
       end
 
       it 'does not create a new post' do
         expect do
-          post api_v1_posts_path, params: invalid_params
+          post posts_path, params: invalid_params
         end.not_to change(Post, :count)
       end
     end
@@ -87,32 +79,32 @@ describe 'Posts' do
       it 'returns an unauthorized response' do
         sign_out user
 
-        patch api_v1_post_path(post), params: { post: { body: Faker::Lorem.paragraph } }
+        patch post_path(post), params: { body: Faker::Lorem.paragraph }
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
     context 'with valid params' do
       it 'returns a successful response' do
-        patch api_v1_post_path(post), params: { post: { body: Faker::Lorem.paragraph } }
+        patch post_path(post), params: { body: Faker::Lorem.paragraph }
         expect(response).to have_http_status(:accepted)
       end
 
       it 'updates body' do
         new_body = Faker::Lorem.paragraph
-        patch api_v1_post_path(post), params: { post: { body: new_body } }
+        patch post_path(post), params: { body: new_body }
         expect(response.parsed_body['body']).to eq(new_body)
       end
     end
 
     context 'with invalid params' do
       it 'returns failure response' do
-        patch api_v1_post_path(post), params: { post: { body: '' } }
+        patch post_path(post), params: { body: '' }
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'does not update the post' do
-        patch api_v1_post_path(post), params: { post: { body: '' } }
+        patch post_path(post), params: { body: '' }
         test_post = Post.find post.id
         expect(test_post.body).to eq(post.body)
       end
@@ -126,14 +118,14 @@ describe 'Posts' do
       it 'returns an unauthorized response' do
         sign_out user
 
-        delete api_v1_post_path(post)
+        delete post_path(post)
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
     context 'when post exists' do
       it 'returns a successful response' do
-        delete api_v1_post_path(post)
+        delete post_path(post)
         expect(response).to have_http_status(:no_content)
       end
 
@@ -142,14 +134,14 @@ describe 'Posts' do
         post = Post.last
 
         expect do
-          delete api_v1_post_path(post)
+          delete post_path(post)
         end.to change(Post, :count).by(-1)
       end
     end
 
     context 'when post does not exist' do
       it 'returns not_found response' do
-        delete api_v1_post_path(id: -1)
+        delete post_path(id: -1)
         expect(response).to have_http_status(:not_found)
       end
     end
