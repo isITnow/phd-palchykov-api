@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-describe 'Api::V1::PublicationPeriods' do
+describe 'PublicationPeriods' do
   let(:user) { create(:user) }
   let(:publication_period) { create(:publication_period) }
 
   before { sign_in user }
 
-  describe 'GET /api/v1/publication_periods' do
+  describe 'GET /publication_periods' do
     it 'returns a successful response' do
       get api_v1_publication_periods_path
       expect(response).to have_http_status(:ok)
@@ -22,7 +22,7 @@ describe 'Api::V1::PublicationPeriods' do
     end
   end
 
-  describe 'POST /api/v1/publication_periods' do
+  describe 'POST /publication_periods' do
     context 'with no user signed in' do
       it 'returns an unauthorized response' do
         sign_out user
@@ -72,7 +72,7 @@ describe 'Api::V1::PublicationPeriods' do
     end
   end
 
-  describe 'DELETE /api/v1/publication_periods/:id' do
+  describe 'DELETE /publication_periods/:id' do
     context 'with no user signed in' do
       it 'returns an unauthorized response' do
         sign_out user

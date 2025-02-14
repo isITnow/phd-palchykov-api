@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::NewsController < ApplicationController
+class NewsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_news!, except: %i[index create]
 

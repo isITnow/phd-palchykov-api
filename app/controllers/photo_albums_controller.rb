@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::PhotoAlbumsController < ApplicationController
+class PhotoAlbumsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_photo_album!, only: %i[show update destroy]
 

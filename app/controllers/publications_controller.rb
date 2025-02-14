@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::PublicationsController < ApplicationController
+class PublicationsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_publication_period!
   before_action :set_publication!, except: %i[index create]

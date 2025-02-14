@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-describe 'Api::V1::Posts' do
+describe 'Posts' do
   let(:user) { create(:user) }
 
   before { sign_in user }
 
-  describe 'GET /api/v1/posts' do
+  describe 'GET /posts' do
     it 'returns a successful response' do
       get api_v1_posts_path
       expect(response).to have_http_status(:ok)
@@ -21,7 +21,7 @@ describe 'Api::V1::Posts' do
     end
   end
 
-  describe 'POST /api/v1/posts' do
+  describe 'POST /posts' do
     let(:valid_params) do
       {
         post: {
@@ -80,7 +80,7 @@ describe 'Api::V1::Posts' do
     end
   end
 
-  describe 'PATCH /api/v1/posts:id' do
+  describe 'PATCH /posts:id' do
     let(:post) { create(:post) }
 
     context 'with no user signed in' do
@@ -119,7 +119,7 @@ describe 'Api::V1::Posts' do
     end
   end
 
-  describe 'DELETE /api/v1/posts:id' do
+  describe 'DELETE /posts:id' do
     let(:post) { create(:post) }
 
     context 'with no user signed in' do

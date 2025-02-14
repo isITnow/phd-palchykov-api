@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-describe 'Api::V1::Colleagues' do
+describe 'Colleagues' do
   let(:user) { create(:user) }
   let(:colleague) { create(:colleague) }
 
   before { sign_in user }
 
-  describe 'GET /api/v1/colleagues' do
+  describe 'GET /colleagues' do
     it 'returns a successful response' do
       get api_v1_colleagues_path
       expect(response).to have_http_status(:ok)
@@ -22,7 +22,7 @@ describe 'Api::V1::Colleagues' do
     end
   end
 
-  describe 'POST /api/v1/colleagues' do
+  describe 'POST /colleagues' do
     let(:valid_params) do
       {
         colleague: {
@@ -56,25 +56,25 @@ describe 'Api::V1::Colleagues' do
 
     context 'with valid params' do
       it 'returns a successful response' do
-        post '/api/v1/colleagues', params: valid_params
+        post '/colleagues', params: valid_params
         expect(response).to have_http_status(:created)
       end
 
       it 'creates a new colleague' do
         expect do
-          post '/api/v1/colleagues', params: valid_params
+          post '/colleagues', params: valid_params
         end.to change(Colleague, :count).by(1)
       end
     end
 
     context 'with invalid params' do
       it 'returns failure response' do
-        post '/api/v1/colleagues', params: invalid_params
+        post '/colleagues', params: invalid_params
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'returns error message' do
-        post '/api/v1/colleagues', params: invalid_params
+        post '/colleagues', params: invalid_params
         expect(response.parsed_body['error']).to include("Name can't be blank",
                                                          'Position is too short (minimum is 5 characters)',
                                                          'Photo must be attached',
@@ -83,13 +83,13 @@ describe 'Api::V1::Colleagues' do
 
       it 'does not create a new colleague' do
         expect do
-          post '/api/v1/colleagues', params: invalid_params
+          post '/colleagues', params: invalid_params
         end.not_to change(Colleague, :count)
       end
     end
   end
 
-  describe 'PATCH /api/v1/colleague/:id' do
+  describe 'PATCH /colleague/:id' do
     context 'with no user signed in' do
       it 'returns an unauthorized response' do
         sign_out user
@@ -132,7 +132,7 @@ describe 'Api::V1::Colleagues' do
     end
   end
 
-  describe 'DELETE /api/v1/colleague/:id' do
+  describe 'DELETE /colleague/:id' do
     context 'with no user signed in' do
       it 'returns an unauthorized response' do
         sign_out user

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::ColleaguesController < ApplicationController
+class ColleaguesController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_colleague!, except: %i[index create]
 

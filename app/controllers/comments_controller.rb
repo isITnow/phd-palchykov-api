@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::CommentsController < ApplicationController
+class CommentsController < ApplicationController
   before_action :authenticate_user!, only: %i[destroy]
   before_action :set_post!
   before_action :set_comment!, only: %i[destroy]

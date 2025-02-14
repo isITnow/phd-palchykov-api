@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::AttachmentsController < ApplicationController
+class AttachmentsController < ApplicationController
   before_action :authenticate_user!
 
   include ErrorHandling
