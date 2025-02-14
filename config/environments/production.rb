@@ -89,4 +89,15 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins 'https://palchykovchem.vercel.app'
+      resource '*',
+               headers: :any,
+               methods: %i[get post put delete options head],
+               credentials: true,
+               expose: ['Authorization']
+    end
+  end
 end

@@ -7,13 +7,13 @@
 
 # Read more: https://github.com/cyu/rack-cors
 
-Rails.application.config.middleware.insert_before 0, Rack::Cors do
-  allow do
-    origins 'https://palchykovchem.vercel.app', 'http://127.0.0.1:3000', 'http://localhost:3003'
+# Rails.application.config.middleware.insert_before 0, Rack::Cors do
+#   allow do
+#     origins 'https://palchykovchem.vercel.app', 'http://127.0.0.1:3001', 'http://localhost:3001'
 
-    resource '*',
-             headers: :any,
-             methods: %i[get post put patch delete options head],
-             expose: ['Authorization']
-  end
-end
+#     resource '*',
+#              headers: :any,
+#              methods: %i[get post put patch delete options head],
+#              expose: ['Authorization']
+#   end
+# end
