@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_27_142414) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_17_122715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,15 +42,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_27_142414) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "colleagues", force: :cascade do |t|
+  create_table "collaborators", force: :cascade do |t|
     t.string "name", null: false
     t.string "position", null: false
-    t.string "phone"
-    t.string "email"
+    t.string "link"
+    t.integer "category", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_colleagues_on_email", unique: true
-    t.index ["name"], name: "index_colleagues_on_name", unique: true
+    t.index ["category"], name: "index_collaborators_on_category"
+    t.index ["link"], name: "index_collaborators_on_link", unique: true
+    t.index ["name"], name: "index_collaborators_on_name", unique: true
   end
 
   create_table "comments", force: :cascade do |t|
