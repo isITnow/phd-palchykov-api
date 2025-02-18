@@ -73,7 +73,7 @@ Rails.application.configure do
       origins 'http://localhost:3001'
       resource '*',
                headers: :any,
-               methods: %i[get post put delete options head],
+               methods: %i[get post put patch delete options head],
                credentials: true,
                expose: ['Authorization']
     end

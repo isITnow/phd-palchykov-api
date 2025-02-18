@@ -95,7 +95,7 @@ Rails.application.configure do
       origins 'https://palchykovchem.vercel.app'
       resource '*',
                headers: :any,
-               methods: %i[get post put delete options head],
+               methods: %i[get post put patch delete options head],
                credentials: true,
                expose: ['Authorization']
     end
