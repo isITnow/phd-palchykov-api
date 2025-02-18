@@ -13,7 +13,7 @@ Rails.application.routes.draw do
                        registrations: 'users/registrations'
                      }
 
-  resources :colleagues, except: %i[new edit]
+  resources :collaborators, except: %i[new edit]
   resources :news, except: %i[new edit]
   resources :photo_albums, except: %i[new edit]
 

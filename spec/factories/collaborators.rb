@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :colleague do
-    sequence(:email) { Faker::Internet.email }
+  factory :collaborator do
     sequence(:name) { Faker::Name.name }
-    phone { Faker::PhoneNumber.phone_number_with_country_code }
+    position { Faker::Job.position }
+    category { %w[local international alumni].sample }
+    sequence(:link) do |n|
+      "https://www.dnu.dp.ua/#{n}"
+    end
     photo do
       {
         io: File.open('spec/fixtures/default_image.jpg'),
@@ -12,6 +15,5 @@ FactoryBot.define do
         content_type: 'image/jpeg'
       }
     end
-    position { Faker::Job.position }
   end
 end
