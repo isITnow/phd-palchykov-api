@@ -7,7 +7,7 @@ class CollaboratorsController < ApplicationController
   include ErrorHandling
 
   def index
-    collaborators = Collaborator.order(created_at: :desc)
+    collaborators = Collaborator.order(created_at: :asc)
 
     render json: collaborators, status: :ok
   end
